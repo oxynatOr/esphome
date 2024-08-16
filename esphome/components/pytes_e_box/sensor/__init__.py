@@ -239,6 +239,7 @@ CONFIG_SCHEMA = BATTERY_SCHEMA.extend(
 # )
 
 async def to_code(config):
+    paren = await cg.get_variable(config[CONF_PYTES_E_BOX_ID])
     var = await cg.get_variable(config[CONF_PYTES_E_BOX_ID])
 
     bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])

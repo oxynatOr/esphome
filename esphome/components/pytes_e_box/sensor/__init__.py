@@ -225,7 +225,7 @@ CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
 # )
 
 async def to_code(config):
-    var = await cg.get_variable(config[CONF_PYTES_E_ BOX_ID])
+    var = await cg.get_variable(config[CONF_PYTES_E_BOX_ID])
 
     bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
 

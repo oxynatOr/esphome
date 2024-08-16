@@ -195,7 +195,7 @@ CELL_TYPES = {
 
 
 
-CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
+CONFIG_SCHEMA = BATTERY_SCHEMA.extend(
     {
         cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor)
     }

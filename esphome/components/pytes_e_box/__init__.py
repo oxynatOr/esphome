@@ -83,8 +83,8 @@ CELLS_ARRAYS_SCHEMA = cv.ensure_list(
 PYTES_E_BOX_COMPONENT_SCHEMA = cv.Schema(
     {
         cv.GenerateID(CONF_PYTES_E_BOX_ID): cv.use_id(PytesEBoxComponent),
-#        cv.Required(CONF_BATTERY): cv.int_range(1, 16),
-#        cv.Optional(CONF_CELL): cv.int_range(0, 16),
+        #cv.Required(CONF_BATTERY): cv.int_range(1, 16),
+        #cv.Optional(CONF_CELL): cv.int_range(0, 16),
     }
 )
 

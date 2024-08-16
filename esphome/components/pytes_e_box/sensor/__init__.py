@@ -16,7 +16,7 @@ from esphome.const import (
     DEVICE_CLASS_BATTERY
     )
 
-from .. import (pytes_ebox_ns ,CONF_PYTES_EBOX_ID, PYTES_EBOX_COMPONENT_SCHEMA, CONF_CELL, PytesEBoxBattery, PytesEBoxBatteryCell, 
+from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, PytesEBoxBattery, PytesEBoxBatteryCell, 
                 CONF_BATTERIES_COMPONENT, CONF_PYTES_E_BOX_ID, CONF_BATTERY, CONF_BATTERY_ARRAYS, CONF_BATTERY_ARRAY_ID, 
                 CONF_CELL_ARRAYS, CONF_CELL_ARRAY_ID, BATTERIES_ARRAYS_SCHEMA, CELLS_ARRAYS_SCHEMA
                 )
@@ -225,7 +225,7 @@ CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
 # )
 
 async def to_code(config):
-    var = await cg.get_variable(config[CONF_PYTES_EBOX_ID])
+    var = await cg.get_variable(config[CONF_PYTES_E_ BOX_ID])
 
     bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
 

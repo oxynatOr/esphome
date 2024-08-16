@@ -36,8 +36,6 @@ ICON_ALARM_LOW_VOLUME = "mdi:volume-high"
 UNIT_AMPERE_HOURS = "Ah"
 
 pytes_e_box_ns = cg.esphome_ns.namespace("pytes_e_box")
-
-pytes_e_box_ns = cg.esphome_ns.namespace("pytes_e_box")
 PytesEBoxComponent = pytes_e_box_ns.class_("PytesEBoxComponent", cg.PollingComponent, uart.UARTDevice)
 CONF_BATTERIES_COMPONENT = "batteries"
 #CONF_BATTERIES = "batteries_in_rack"

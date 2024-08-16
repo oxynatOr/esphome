@@ -243,7 +243,7 @@ async def to_code(config):
 
     bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
 
-    for marker in TYPES:
+    for marker in BAT_TYPES:
         if marker_config := config.get(marker):
             sens = await sensor.new_sensor(marker_config)
             cg.add(getattr(bat, f"set_{marker}_sensor")(sens))

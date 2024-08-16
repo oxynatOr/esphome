@@ -48,11 +48,11 @@ CONF_BATTERY = "battery"
 CONF_CELL = "cell"
 
 
-PytesEBoxBattery = pytes_e_box_ns.class_("PytesEBoxBattery")
-CONF_BATTERY_ARRAYS = "batteries"
-CONF_BATTERY_ARRAY_ID = "battery_id"
+PytesEBoxBatterySensor = pytes_e_box_ns.class_("PytesEBoxBatterySensor")
+#CONF_BATTERY_ARRAYS = "batteries"
+#CONF_BATTERY_ARRAY_ID = "battery_id"
 
-PytesEBoxBatteryCell = pytes_e_box_ns.class_("PytesEBoxBatteryCell")
+PytesEBoxBatteryCellSensor = pytes_e_box_ns.class_("PytesEBoxBatteryCellSensor")
 CONF_CELL_ARRAYS = "cells"
 CONF_CELL_ARRAY_ID = "cell_id"
 
@@ -60,8 +60,8 @@ CONF_CELL_ARRAY_ID = "cell_id"
 BATTERIES_ARRAYS_SCHEMA = cv.ensure_list(
     cv.Schema(
         {
-            cv.GenerateID(): cv.declare_id(PytesEBoxBattery),
-            cv.Required(CONF_BATTERY_ARRAY_ID): cv.int_range(0, 16),
+            cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor),
+            cv.Required(CONF_BATTERY): cv.int_range(0, 16),
             cv.Optional(CONF_NAME): cv.string_strict,
         }
     )
@@ -72,7 +72,7 @@ BATTERIES_ARRAYS_SCHEMA = cv.ensure_list(
 CELLS_ARRAYS_SCHEMA = cv.ensure_list(
     cv.Schema(
         {
-            cv.GenerateID(): cv.declare_id(PytesEBoxBatteryCell),
+            cv.GenerateID(): cv.declare_id(PytesEBoxBatteryCellSensor),
             cv.Required(CONF_CELL_ARRAY_ID): cv.int_range(0, 16),
             cv.Optional(CONF_NAME): cv.string_strict,
         }

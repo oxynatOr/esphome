@@ -57,8 +57,7 @@ CONF_CELL_ARRAYS = "cells"
 CONF_CELL_ARRAY_ID = "cell_id"
 
 
-BATTERY_SCHEMA = #cv.ensure_list(
-    cv.Schema(
+BATTERY_SCHEMA = cv.Schema(
         {
             cv.GenerateID(CONF_PYTES_E_BOX_ID): cv.use_id(PytesEBoxComponent),
             #cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor),
@@ -66,7 +65,7 @@ BATTERY_SCHEMA = #cv.ensure_list(
             cv.Optional(CONF_NAME): cv.string_strict,
         }
     )
-#)
+
 
 
 

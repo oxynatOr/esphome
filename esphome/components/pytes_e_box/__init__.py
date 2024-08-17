@@ -47,7 +47,7 @@ CONF_PYTES_E_BOX_ID = "pytes_e_box_id"
 CONF_CELL = "cell"
 
 
-PytesEBoxBatterySensor = pytes_e_box_ns.class_("PytesEBoxBatterySensor", cg.Component)
+
 CONF_BATTERY = "battery"
 
 PytesEBoxBatteryCellSensor = pytes_e_box_ns.class_("PytesEBoxBatteryCellSensor", cg.Component)

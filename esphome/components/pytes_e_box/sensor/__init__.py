@@ -18,11 +18,12 @@ from esphome.const import (
     DEVICE_CLASS_BATTERY
     )
 
-from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, PytesEBoxBatterySensor, PytesEBoxBatteryCellSensor, 
+from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, PytesEBoxBatteryCellSensor, 
                 CONF_BATTERIES_COMPONENT, CONF_PYTES_E_BOX_ID, CONF_BATTERY, CONF_CELL_ARRAYS, CONF_CELL_ARRAY_ID, BATTERY_SCHEMA, CELLS_ARRAYS_SCHEMA
                 )
 
 
+PytesEBoxBatterySensor = pytes_e_box_ns.class_("PytesEBoxBatterySensor", cg.Component)
 
 ##Custom 
 UNIT_AMPERE_HOURS       = "Ah"
@@ -51,94 +52,94 @@ CONF_BATTERY_ID         = "battery_sensor"
 CONF_CELL_ID            = "cell_sensor"
 
 
-BAT_TYPES = {
+BAT_TYPES: dict[str, cv.Schema] = {
     CONF_VOLTAGE: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_VOLTAGE,
     ),
     CONF_CURRENT: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_AMPERE,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_CURRENT,
     ),
     CONF_TEMPERATURE: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_CELSIUS,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_TEMPERATURE,
     ),
     CONF_TEMPERATURE_LOW: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_CELSIUS,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_TEMPERATURE,
     ),
     CONF_TEMPERATURE_HIGH: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_CELSIUS,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_TEMPERATURE,
     ),
     CONF_VOLTAGE_LOW: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_VOLTAGE,
     ),
     CONF_VOLTAGE_HIGH: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_VOLTAGE,
     ),
     CONF_COULOMB: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_PERCENT,
         accuracy_decimals=0,
         device_class=DEVICE_CLASS_BATTERY,
     ),
     CONF_SOC_VOLTAGE: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_VOLTAGE,
     ),    
     CONF_WORK_STATUS: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         accuracy_decimals=0,
         device_class=DEVICE_CLASS_EMPTY,
     ),
     CONF_CELLS: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         accuracy_decimals=0,
         device_class=DEVICE_CLASS_EMPTY,
     ),
     CONF_TOTAL_COULOMB: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_AMPERE_HOURS,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_EMPTY,
         state_class=STATE_CLASS_MEASUREMENT,
     ),
     CONF_REAL_COULOMB: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_AMPERE_HOURS,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_EMPTY,
         state_class=STATE_CLASS_MEASUREMENT,
     ),
     CONF_TOTAL_POWER_IN: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_AMPERE_HOURS,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_EMPTY,
         state_class=STATE_CLASS_MEASUREMENT,
     ),
     CONF_TOTAL_POWER_OUT: sensor.sensor_schema(
-        PytesEBoxBatterySensor,
+        #PytesEBoxBatterySensor,
         unit_of_measurement=UNIT_AMPERE_HOURS,
         device_class=DEVICE_CLASS_EMPTY,
         state_class=STATE_CLASS_MEASUREMENT,
@@ -146,7 +147,7 @@ BAT_TYPES = {
     ),
 }
 
-CELL_TYPES = {
+CELL_TYPES: dict[str, cv.Schema] = {
     CONF_CELL_VOLTAGE: sensor.sensor_schema(
         PytesEBoxBatteryCellSensor,
         unit_of_measurement=UNIT_VOLT,
@@ -238,11 +239,31 @@ CONFIG_SCHEMA = BATTERY_SCHEMA.extend(
 #         #cv.Required(CONF_CMD_IDLE_TIME): cv.positive_time_period_milliseconds,
 #     }
 # )
+# if CONF_BATTERIES in config:
+#     for battery_config in config[CONF_BATTERIES]:
+#         battery_sensor = await cg.get_variable(battery_config[CONF_BATTERY_ID])
+#         battery = cg.new_Pvariable(battery_sensor)
+#         for marker, sensor_schema in BAT_TYPES.items():
+#             if marker in battery_config:
+#                 sensor_var = await sensor.new_sensor(battery_config[marker])
+#                 cg.add(getattr(battery, f"set_{marker}_sensor")(sensor_var))
+#                 cg.add(var.add_battery_sensor(battery_sensor))
+
+# if CONF_CELLS in config:
+#     for cell_config in config[CONF_CELLS]:
+#         battery_sensor = await cg.get_variable(cell_config[CONF_BATTERY_ID])
+#         for cell in cell_config[CONF_CELLS]:
+#             cell_sensor = await cg.get_variable(cell[CONF_CELL_ID])
+#             cell_var = cg.new_Pvariable(cell_sensor)
+#             for marker, sensor_schema in CELL_TYPES.items():
+#                 if marker in cell:
+#                     sensor_var = await sensor.new_sensor(cell[marker])
+#                     cg.add(getattr(cell_var, f"set_{marker}_sensor")(sensor_var))
+#                     cg.add(var.add_cell_sensor(cell_var))
+
 
 async def to_code(config):
     paren = await cg.get_variable(config[CONF_PYTES_E_BOX_ID])
-    var = await cg.get_variable(config[CONF_PYTES_E_BOX_ID])
-
     bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
 
     for marker in BAT_TYPES:
@@ -256,24 +277,3 @@ async def to_code(config):
 
 
 
-    # if CONF_BATTERIES in config:
-    #     for battery_config in config[CONF_BATTERIES]:
-    #         battery_sensor = await cg.get_variable(battery_config[CONF_BATTERY_ID])
-    #         battery = cg.new_Pvariable(battery_sensor)
-    #         for marker, sensor_schema in BAT_TYPES.items():
-    #             if marker in battery_config:
-    #                 sensor_var = await sensor.new_sensor(battery_config[marker])
-    #                 cg.add(getattr(battery, f"set_{marker}_sensor")(sensor_var))
-    #                 cg.add(var.add_battery_sensor(battery_sensor))
-
-    # if CONF_CELLS in config:
-    #     for cell_config in config[CONF_CELLS]:
-    #         battery_sensor = await cg.get_variable(cell_config[CONF_BATTERY_ID])
-    #         for cell in cell_config[CONF_CELLS]:
-    #             cell_sensor = await cg.get_variable(cell[CONF_CELL_ID])
-    #             cell_var = cg.new_Pvariable(cell_sensor)
-    #             for marker, sensor_schema in CELL_TYPES.items():
-    #                 if marker in cell:
-    #                     sensor_var = await sensor.new_sensor(cell[marker])
-    #                     cg.add(getattr(cell_var, f"set_{marker}_sensor")(sensor_var))
-    #                     cg.add(var.add_cell_sensor(cell_var))

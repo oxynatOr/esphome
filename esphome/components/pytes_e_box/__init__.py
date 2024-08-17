@@ -44,15 +44,13 @@ CONF_POLL_TIMEOUT = "poll_timeout"
 
 
 CONF_PYTES_E_BOX_ID = "pytes_e_box_id"
-CONF_BATTERY = "battery"
 CONF_CELL = "cell"
 
 
-PytesEBoxBatterySensor = pytes_e_box_ns.class_("PytesEBoxBatterySensor")
-#CONF_BATTERY_ARRAYS = "batteries"
-#CONF_BATTERY_ARRAY_ID = "battery_id"
+PytesEBoxBatterySensor = pytes_e_box_ns.class_("PytesEBoxBatterySensor", cg.Component)
+CONF_BATTERY = "battery"
 
-PytesEBoxBatteryCellSensor = pytes_e_box_ns.class_("PytesEBoxBatteryCellSensor")
+PytesEBoxBatteryCellSensor = pytes_e_box_ns.class_("PytesEBoxBatteryCellSensor", cg.Component)
 CONF_CELL_ARRAYS = "cells"
 CONF_CELL_ARRAY_ID = "cell_id"
 
@@ -61,7 +59,7 @@ BATTERY_SCHEMA = cv.Schema(
         {
             cv.GenerateID(CONF_PYTES_E_BOX_ID): cv.use_id(PytesEBoxComponent),
             #cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor),
-            cv.Required(CONF_BATTERY): cv.int_range(0, 16),
+            cv.Required(CONF_BATTERY): CV_NUM_BATTERIES,
             cv.Optional(CONF_NAME): cv.string_strict,
         }
     )

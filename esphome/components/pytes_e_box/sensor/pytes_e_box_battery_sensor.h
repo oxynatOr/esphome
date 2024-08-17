@@ -33,7 +33,7 @@ class PytesEBoxBatterySensor : public PytesEBoxListener, public Component {
 
  protected:
   int8_t bat_num_;  
-  int8_t cell_num_;
+
 };
 
 }  // namespace pytes_e_box

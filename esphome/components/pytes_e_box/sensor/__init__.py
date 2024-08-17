@@ -243,14 +243,14 @@ async def to_code(config):
     paren = await cg.get_variable(config[CONF_PYTES_E_BOX_ID])
     var = await cg.get_variable(config[CONF_PYTES_E_BOX_ID])
 
-    # bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
+    bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
 
-    # for marker in BAT_TYPES:
-    #     if marker_config := config.get(marker):
-    #         sens = await sensor.new_sensor(marker_config)
-    #         cg.add(getattr(bat, f"set_{marker}_sensor")(sens))
+    for marker in BAT_TYPES:
+        if marker_config := config.get(marker):
+            sens = await sensor.new_sensor(marker_config)
+            cg.add(getattr(bat, f"set_{marker}_sensor")(sens))
 
-    # cg.add(paren.register_listener(bat))
+    cg.add(paren.register_listener(bat))
 
 
 

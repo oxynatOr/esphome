@@ -8,7 +8,7 @@ namespace pytes_e_box {
 //static const char *const TAG_BS = "PytesEBoxbattery.sensor";
 
 PytesEBoxBatterySensor::PytesEBoxBatterySensor(int8_t bat_num) { this->bat_num_ = bat_num; }
-PytesEBoxBatterySensor::PytesEBoxBatterySensor(int8_t bat_num, int8_t cell_num) { this->bat_num_ = bat_num; this->cell_num_ = cell_num; }
+
 
 void PytesEBoxBatterySensor::dump_config() {
   ESP_LOGCONFIG(TAG, "PytesEBox Battery Sensor:");
@@ -31,13 +31,15 @@ void PytesEBoxBatterySensor::dump_config() {
   LOG_SENSOR("  ", "Work Status", this->work_status_sensor_);
   LOG_SENSOR("  ", "Cells", this->cells_sensor_);
 
-  LOG_SENSOR("  ", "Cell_Voltage",this->cell_voltage_sensor_);
-  LOG_SENSOR("  ", "Cell_Current",this->cell_current_sensor_);
-  LOG_SENSOR("  ", "Cell_Temperature",this->cell_temperature_sensor_);
-  LOG_SENSOR("  ", "Cell_Coulomb", this->cell_coulomb_sensor_);
+  // LOG_SENSOR("  ", "Cell_Voltage",this->cell_voltage_sensor_);
+  // LOG_SENSOR("  ", "Cell_Current",this->cell_current_sensor_);
+  // LOG_SENSOR("  ", "Cell_Temperature",this->cell_temperature_sensor_);
+  // LOG_SENSOR("  ", "Cell_Coulomb", this->cell_coulomb_sensor_);
 }
 
 void PytesEBoxBatterySensor::on_batn_line_read(bat_index_LineContents *line) { 
+  return;
+  /*
   if (this->bat_num_ != line->bat_num && this->cell_num_ != line->cell_num) {
     return;    
   }  
@@ -57,9 +59,7 @@ void PytesEBoxBatterySensor::on_batn_line_read(bat_index_LineContents *line) {
   if (this->cell_coulomb_sensor_ != nullptr) {
   this->cell_coulomb_sensor_->publish_state(((float)line->cell_coulomb) / 1000.0f);
   }
-
-
-
+*/
 }
 
 void PytesEBoxBatterySensor::on_pwrn_line_read(pwr_data_LineContents *line) { 

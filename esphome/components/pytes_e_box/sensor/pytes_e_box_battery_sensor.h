@@ -9,7 +9,6 @@ namespace pytes_e_box {
 class PytesEBoxBatterySensor : public PytesEBoxListener, public Component {
  public:
   PytesEBoxBatterySensor(int8_t bat_num);
-  PytesEBoxBatterySensor(int8_t bat_num,int8_t cell_num); 
   void dump_config() override;
   SUB_SENSOR(voltage)
   SUB_SENSOR(current)
@@ -26,10 +25,6 @@ class PytesEBoxBatterySensor : public PytesEBoxListener, public Component {
   SUB_SENSOR(total_power_out)
   SUB_SENSOR(work_status)
   SUB_SENSOR(cells)
-  SUB_SENSOR(cell_voltage)
-  SUB_SENSOR(cell_current)
-  SUB_SENSOR(cell_temperature)
-  SUB_SENSOR(cell_coulomb)
 
 
   virtual void on_pwr_line_read(pwr_LineContents *line);

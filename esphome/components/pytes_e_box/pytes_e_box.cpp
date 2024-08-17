@@ -112,7 +112,7 @@ void PytesEBoxComponent::loop() {
       const char *command = this->cmd_queue_[this->command_queue_position_].command.c_str();
       ESP_LOGE(TAG, "timeout command from queue: %s", command);
       this->clear_uart_buffer();
-      this->command_queue_position_ = (this->command_queue_position_+1) % COMMAND_QUEUE_LENGTH;
+      //this->command_queue_position_ = (this->command_queue_position_+1) % COMMAND_QUEUE_LENGTH;
       this->state_ = STATE_SEND_NEXT_COMMAND;
       if (this->command_queue_position_ == this->command_queue_max_) { this->state_ = STATE_IDLE; } //this->command_queue_position_ = 0;}
       return;

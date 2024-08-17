@@ -200,10 +200,11 @@ CONFIG_SCHEMA = BATTERY_SCHEMA.extend(
         cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor)
     }
 ).extend(
-#             cv.Optional(CONF_CELLS): cv.All(cv.ensure_list(cv.Schema({
-#             cv.Required(CONF_BATTERY_ID): cv.use_id(PytesEBoxBatterySensor),
-#             cv.Required(cv.GenerateID(CONF_CELL_ID)): cv.declare_id(PytesEBoxBatteryCellSensor),
-#             cv.Optional(CONF_BATTERY_ID): CELL_SCHEMA,    
+            cv.Optional(CONF_CELLS): cv.All(cv.ensure_list(cv.Schema({
+            cv.Required(CONF_BATTERY_ID): cv.use_id(PytesEBoxBatterySensor),
+            cv.Required(cv.GenerateID(CONF_CELL_ID)): cv.declare_id(PytesEBoxBatteryCellSensor),
+            cv.Optional(CONF_BATTERY_ID): CELL_SCHEMA,    
+            }))),
 ).extend(
     {
         cv.Optional(marker): schema for marker, schema in BAT_TYPES.items()
@@ -242,14 +243,18 @@ async def to_code(config):
     paren = await cg.get_variable(config[CONF_PYTES_E_BOX_ID])
     var = await cg.get_variable(config[CONF_PYTES_E_BOX_ID])
 
-    bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
+    # bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
 
-    for marker in BAT_TYPES:
-        if marker_config := config.get(marker):
-            sens = await sensor.new_sensor(marker_config)
-            cg.add(getattr(bat, f"set_{marker}_sensor")(sens))
+    # for marker in BAT_TYPES:
+    #     if marker_config := config.get(marker):
+    #         sens = await sensor.new_sensor(marker_config)
+    #         cg.add(getattr(bat, f"set_{marker}_sensor")(sens))
 
-    cg.add(paren.register_listener(bat))
+    # cg.add(paren.register_listener(bat))
+
+
+
+
 
     # if CONF_BATTERIES in config:
     #     for battery_config in config[CONF_BATTERIES]:

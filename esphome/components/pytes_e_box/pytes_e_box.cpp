@@ -342,7 +342,7 @@ int i = this->buffer_index_read_;
 
   if (this->buffer_[i].rfind("Total Power In:", 0) == 0) { 
     sscanf(this->buffer_[i].c_str(),"Total Power In: %dAS",&pwr_data_l.totalPowerIn);
-    ESP_LOGV(TAG,"%s -> %s",this->buffer_[i].c_str(),pwr_data_l.totalPowerIn);
+    ESP_LOGV(TAG,"%s -> %d",this->buffer_[i].c_str(),pwr_data_l.totalPowerIn);
   }
   
   if (this->buffer_[i].rfind("Work Status:", 0) == 0) {

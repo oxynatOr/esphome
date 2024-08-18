@@ -53,6 +53,7 @@ CONF_BATTERY = "battery"
 PytesEBoxBatteryCellSensor = pytes_e_box_ns.class_("PytesEBoxBatteryCellSensor", cg.Component)
 CONF_CELL_ARRAYS = "cells"
 CONF_CELL_ARRAY_ID = "cell_id"
+CONF_BAT_ARRAY_ID = "battery_id"
 
 
 BATTERY_SCHEMA = cv.Schema(

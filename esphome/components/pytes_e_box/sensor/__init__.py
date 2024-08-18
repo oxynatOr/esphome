@@ -149,25 +149,25 @@ BAT_TYPES: dict[str, cv.Schema] = {
 
 CELL_TYPES: dict[str, cv.Schema] = {
     CONF_CELL_VOLTAGE: sensor.sensor_schema(
-        PytesEBoxBatteryCellSensor,
+        #PytesEBoxBatteryCellSensor,
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_VOLTAGE,
     ),
     CONF_CELL_CURRENT: sensor.sensor_schema(
-        PytesEBoxBatteryCellSensor,
+        #PytesEBoxBatteryCellSensor,
         unit_of_measurement=UNIT_AMPERE,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_CURRENT,
     ),
     CONF_CELL_TEMPERATURE: sensor.sensor_schema(
-        PytesEBoxBatteryCellSensor,
+        #PytesEBoxBatteryCellSensor,
         unit_of_measurement=UNIT_CELSIUS,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_TEMPERATURE,
     ),  
     CONF_CELL_COULOMB: sensor.sensor_schema(
-        PytesEBoxBatteryCellSensor,
+        #PytesEBoxBatteryCellSensor,
         unit_of_measurement=UNIT_PERCENT,
         accuracy_decimals=0,
         device_class=DEVICE_CLASS_BATTERY,
@@ -180,9 +180,9 @@ CELL_TYPES: dict[str, cv.Schema] = {
 # BAT_SCHEMA = cv.Schema(
 #     {cv.Optional(marker): schema for marker, schema in BAT_TYPES.items()}
 # )
-# CELL_SCHEMA = cv.Schema(
-#     {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
-# )
+CELL_SCHEMA = cv.Schema(
+    {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
+)
 
 
 
@@ -201,11 +201,11 @@ CONFIG_SCHEMA = BATTERY_SCHEMA.extend(
         cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor)
     }
 ).extend(
-            # cv.Optional(CONF_CELLS): cv.All(cv.ensure_list(cv.Schema({
-            # cv.Required(CONF_BATTERY_ID): cv.use_id(PytesEBoxBatterySensor),
-            # cv.Required(cv.GenerateID(CONF_CELL_ID)): cv.declare_id(PytesEBoxBatteryCellSensor),
-            # cv.Optional(CONF_BATTERY_ID): CELL_SCHEMA,    
-            # }))),
+            cv.Optional(CONF_CELLS): cv.ensure_list(cv.Schema({
+            cv.Required(CONF_BATTERY_ID): cv.use_id(PytesEBoxBatterySensor),
+            cv.Required(cv.GenerateID(CONF_CELL_ID)): cv.declare_id(PytesEBoxBatteryCellSensor),
+            cv.Optional(CONF_BATTERY_ID): CELL_SCHEMA,    
+            })),
 ).extend(
     {
         cv.Optional(marker): schema for marker, schema in BAT_TYPES.items()

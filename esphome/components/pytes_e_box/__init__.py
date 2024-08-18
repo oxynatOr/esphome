@@ -66,7 +66,7 @@ BATTERY_SCHEMA = cv.Schema(
 
 
 
-CELLS_ARRAYS_SCHEMA = BATTERY_SCHEMA.ensure_list(
+CELLS_ARRAYS_SCHEMA = cv.ensure_list(
     cv.Schema(
         {
             cv.GenerateID(): cv.declare_id(PytesEBoxBatteryCellSensor),

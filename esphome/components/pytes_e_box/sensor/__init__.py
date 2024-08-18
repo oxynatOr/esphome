@@ -196,8 +196,8 @@ cv.Schema({
 CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
     cv.Schema(
         {
-            cv.Optional(CONF_BATTERY): CELL_SCHEMA,
-            cv.Optional(CONF_CELL_ARRAYS): BAT_SCHEMA,            
+            cv.Optional(CONF_BATTERY): BAT_SCHEMA,
+            cv.Optional(CONF_CELL_ARRAYS): CELL_SCHEMA,            
         }
     )
 )

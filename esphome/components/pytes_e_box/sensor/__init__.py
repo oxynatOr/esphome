@@ -181,11 +181,12 @@ BAT_SCHEMA = cv.Schema(
     {cv.Optional(marker): schema for marker, schema in BAT_TYPES.items()}
 )
 
-CELL_SCHEMA = cv.Schema(
+CELL_SCHEMA = cv.Schema({
     cv.use_id(PytesEBoxBatteryCellSensor): cv.Schema(   
         {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
-    )
+    )}
 )
+
 
 
 CONFIG_SCHEMA = cv.All(

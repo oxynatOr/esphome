@@ -180,10 +180,10 @@ CELL_TYPES: dict[str, cv.Schema] = {
 # BAT_SCHEMA = cv.Schema(
 #     {cv.Optional(marker): schema for marker, schema in BAT_TYPES.items()}
 # )
-CELL_SCHEMA = cv.Schema(
-    cv.GenerateID(CONF_CELL_ARRAY_ID): cv.use_id(PytesEBoxBatteryCellSensor),
-    {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
-)
+# CELL_SCHEMA = cv.Schema(
+#     cv.GenerateID(CONF_CELL_ARRAY_ID): cv.use_id(PytesEBoxBatteryCellSensor),
+#     {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
+# )
 
 
 
@@ -206,6 +206,7 @@ CONFIG_SCHEMA = BATTERY_SCHEMA.extend(
             #cv.Required(CONF_BATTERY_ID): cv.use_id(PytesEBoxBatterySensor),
             #cv.Required(cv.GenerateID(CONF_CELL_ARRAY_ID)): cv.declare_id(PytesEBoxBatteryCellSensor),        
             cv.Optional(CONF_CELL_ARRAY_ID): CELLS_ARRAYS_SCHEMA,    
+            {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}
             #})),
 ).extend(
     {

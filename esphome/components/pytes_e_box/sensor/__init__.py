@@ -202,10 +202,10 @@ CONFIG_SCHEMA = BATTERY_SCHEMA.extend(
         cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor)
     }
 ).extend(  
-            #cv.Optional(CONF_CELL_ARRAYS): cv.ensure_list(cv.Schema({
+            #cv.Optional(): cv.ensure_list(cv.Schema({
             #cv.Required(CONF_BATTERY_ID): cv.use_id(PytesEBoxBatterySensor),
             #cv.Required(cv.GenerateID(CONF_CELL_ARRAY_ID)): cv.declare_id(PytesEBoxBatteryCellSensor),        
-            cv.Optional(CONF_BATTERY_ID): CELL_SCHEMA,    
+            cv.Optional(CONF_CELL_ARRAY_ID): CELLS_ARRAYS_SCHEMA,    
             #})),
 ).extend(
     {

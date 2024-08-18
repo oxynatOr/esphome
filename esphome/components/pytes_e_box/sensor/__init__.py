@@ -18,7 +18,7 @@ from esphome.const import (
     DEVICE_CLASS_BATTERY
     )
 
-from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, PytesEBoxBatteryCellSensor, CONF_BAT_ARRAY_ID,
+from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, PytesEBoxBatteryCellSensor, 
                 CONF_BATTERIES_COMPONENT, CONF_PYTES_E_BOX_ID, CONF_BATTERY, CONF_CELL_ARRAYS, CONF_CELL_ARRAY_ID, BATTERY_SCHEMA, CELLS_ARRAYS_SCHEMA
                 )
 
@@ -196,8 +196,8 @@ cv.Schema({
 CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
     cv.Schema(
         {
-            cv.Optional(CONF_CELL_ARRAY_ID): BAT_SCHEMA,
-            cv.Optional(CONF_BAT_ARRAY_ID): CELL_SCHEMA,
+            cv.Optional(CONF_BATTERY): CELL_SCHEMA,
+            cv.Optional(CONF_CELL_ARRAYS): BAT_SCHEMA,            
         }
     )
 )

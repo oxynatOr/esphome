@@ -189,7 +189,8 @@ CELL_SCHEMA = cv.Schema({
 
 
 
-CONFIG_SCHEMA = cv.All(
+#CONFIG_SCHEMA = cv.All(
+CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
     cv.Schema(
         {
             cv.Optional(CONF_CELL): BAT_SCHEMA,

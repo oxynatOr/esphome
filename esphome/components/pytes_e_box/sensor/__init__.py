@@ -181,6 +181,7 @@ CELL_TYPES: dict[str, cv.Schema] = {
 #     {cv.Optional(marker): schema for marker, schema in BAT_TYPES.items()}
 # )
 CELL_SCHEMA = cv.Schema(
+    cv.GenerateID(CONF_CELL_ARRAY_ID): cv.use_id(PytesEBoxBatteryCellSensor),
     {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
 )
 

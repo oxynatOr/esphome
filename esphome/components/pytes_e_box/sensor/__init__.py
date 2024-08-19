@@ -214,9 +214,10 @@ async def to_code(config):
         cg.add(paren.register_listener(bat))    
 
     if CONF_CELL_ARRAYS in config:
-        for cell_config in config[CONF_CELL_ARRAYS]:
-            #cell_sensor = await cg.get_variable(cell[CONF_CELL_ID])
-            cell = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY], cell_config[CONF_CELL]) 
+        for cells_config in config[CONF_CELL_ARRAYS]:
+            if cell_config := config.get(cells_config):
+            cell_sensor = await cg.get_variable(cell_config[CONF_CELL])
+            #cell = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY], cell_config[CONF_CELL]) 
             # for marker in CELL_TYPES.items():
             #     if marker_config := cell_config.get(marker):
             #         sensor_var = await sensor.new_sensor(marker_config)

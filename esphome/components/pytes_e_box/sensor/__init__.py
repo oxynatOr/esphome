@@ -26,7 +26,7 @@ from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEM
                 )
 
 
-MULTI_CONF = True
+
 
 ##Custom 
 UNIT_AMPERE_HOURS       = "Ah"
@@ -184,7 +184,7 @@ CELL_TYPES: dict[str, cv.Schema] = {
 CELLS_ARRAYS_SCHEMA = cv.ensure_list(
     cv.Schema(
         {
-            cv.GenerateID(key=CONF_CELL): cv.declare_id(PytesEBoxBatteryCellSensor),
+            cv.GenerateID(): cv.declare_id(PytesEBoxBatteryCellSensor),
             cv.Required(CONF_CELL): CV_NUM_CELLS,
             cv.Optional(CONF_NAME): cv.string_strict,
         }
@@ -194,7 +194,7 @@ CELLS_ARRAYS_SCHEMA = cv.ensure_list(
 CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
         {
             #cv.GenerateID(CONF_PYTES_E_BOX_ID): cv.use_id(PytesEBoxComponent),
-            cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor),
+            cv.GenerateID(key=CONF_BATTERY): cv.declare_id(PytesEBoxBatterySensor),
             cv.Required(CONF_BATTERY): CV_NUM_BATTERIES,
             cv.Optional(CONF_NAME): cv.string_strict,
             cv.Optional(CONF_CELL_ARRAYS): CELLS_ARRAYS_SCHEMA,

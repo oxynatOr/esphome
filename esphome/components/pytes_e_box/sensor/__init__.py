@@ -258,7 +258,7 @@ async def to_code(config):
 
     if CONF_CELL_ARRAYS in config:
         for cell_config in config[CONF_CELLS]:
-            cell = await cg.get_variable(config[CONF_ID], config[CONF_BATTERY], cell_config[CONF_CELL][CONF_ID])
+            cell = await cg.get_variable(config[CONF_ID], config[CONF_BATTERY], cell_config[CONF_ID])
 
             for marker in CELL_TYPES.items():
                 if marker_config := cell_config.get(marker):

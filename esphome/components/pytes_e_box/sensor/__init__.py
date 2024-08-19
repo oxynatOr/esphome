@@ -194,7 +194,7 @@ CELLS_ARRAYS_SCHEMA = cv.ensure_list(
 CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
         {
             #cv.GenerateID(CONF_PYTES_E_BOX_ID): cv.use_id(PytesEBoxComponent),
-            cv.GenerateID(key=CONF_BATTERY): cv.declare_id(PytesEBoxBatterySensor),
+            cv.GenerateID(key=CONF_ID): cv.declare_id(PytesEBoxBatterySensor),
             cv.Required(CONF_BATTERY): CV_NUM_BATTERIES,
             cv.Optional(CONF_NAME): cv.string_strict,
             cv.Optional(CONF_CELL_ARRAYS): CELLS_ARRAYS_SCHEMA,

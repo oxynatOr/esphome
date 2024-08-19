@@ -215,7 +215,7 @@ async def to_code(config):
 
     if CONF_CELL_ARRAYS in config:
         for cells_config in config[CONF_CELL_ARRAYS]:
-            if cell_config := config.get(cells_config):
+            if cell_config := config.get(cells_config[CONF_CELL]):
                 cell_sensor = await cg.get_variable(cell_config[CONF_CELL])
             #cell = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY], cell_config[CONF_CELL]) 
             # for marker in CELL_TYPES.items():

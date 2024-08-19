@@ -43,7 +43,7 @@ CONF_REAL_COULOMB       = "real_coulomb"
 CONF_TOTAL_POWER_IN     = "total_power_in"
 CONF_TOTAL_POWER_OUT    = "total_power_out"
 CONF_WORK_STATUS        = "work_status"
-CONF_CELLS              = "cells"
+CONF_CELLS              = "cell_count"
 
 CONF_CELL_VOLTAGE       = "voltage"
 CONF_CELL_TEMPERATURE   = "temperature"

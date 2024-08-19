@@ -48,6 +48,7 @@ CONF_CELL = "cell"
 
 
 
+PytesEBoxBatterySensor = pytes_e_box_ns.class_("PytesEBoxBatterySensor", cg.Component)
 CONF_BATTERY = "battery"
 
 PytesEBoxBatteryCellSensor = pytes_e_box_ns.class_("PytesEBoxBatteryCellSensor", cg.Component)
@@ -60,9 +61,9 @@ BATTERY_SCHEMA = cv.Schema(
         {
             #cv.GenerateID(CONF_PYTES_E_BOX_ID): cv.use_id(PytesEBoxComponent),
             cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor),
-            cv.Required(CONF_BATTERY): CV_NUM_BATTERIES,
+            cv.Required(CONF_BAT_ARRAY_ID): CV_NUM_BATTERIES,
             cv.Optional(CONF_NAME): cv.string_strict,
-            cv.Optional(CONF_CELL): cv.use_id(PytesEBoxBatteryCellSensor),
+            cv.Optional(CONF_CELL_ARRAY_ID): cv.use_id(PytesEBoxBatteryCellSensor),
 
         }
     )

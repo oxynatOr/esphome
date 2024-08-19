@@ -26,7 +26,7 @@ from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEM
                 )
 
 
-
+MULTI_CONF = True
 
 ##Custom 
 UNIT_AMPERE_HOURS       = "Ah"

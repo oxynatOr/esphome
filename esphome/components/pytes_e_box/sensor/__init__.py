@@ -217,8 +217,8 @@ async def to_code(config):
         for cells_config in config[CONF_CELL_ARRAYS]:
             cell_var = cg.new_Pvariable(cells_config[CONF_ID])
             for marker, schema in CELL_TYPES.items():
-                if marker in cell_config:
-                    cg.add(getattr(cell_var, f"set_{marker}")(cell_config[marker]))
+                if marker in cells_config:
+                    cg.add(getattr(cell_var, f"set_{marker}")(cells_config[marker]))
             cg.add(paren.register_listener(cell_var))
 
 

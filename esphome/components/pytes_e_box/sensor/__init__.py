@@ -22,6 +22,7 @@ from esphome.const import (
 
 from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, PytesEBoxBatteryCellSensor, PytesEBoxBatterySensor,
                 CONF_BATTERIES_COMPONENT, CONF_PYTES_E_BOX_ID, CONF_BATTERY, CONF_CELL_ARRAYS, CONF_CELL_ARRAY_ID, CV_NUM_CELLS, CV_NUM_BATTERIES
+                
                 )
 
 
@@ -223,7 +224,7 @@ CELLS_ARRAYS_SCHEMA = cv.ensure_list(
     ).extend({cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()})
 )
 
-CONFIG_SCHEMA = PYLONTECH_COMPONENT_SCHEMA.extend(
+CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
         {
             #cv.GenerateID(CONF_PYTES_E_BOX_ID): cv.use_id(PytesEBoxComponent),
             cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor),

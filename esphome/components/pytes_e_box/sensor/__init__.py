@@ -22,7 +22,7 @@ from esphome.const import (
 
 from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, PytesEBoxBatteryCellSensor, PytesEBoxBatterySensor,
                 CONF_BATTERIES_COMPONENT, CONF_PYTES_E_BOX_ID, CONF_BATTERY, CONF_CELL_ARRAYS, CONF_CELL_ARRAY_ID, CV_NUM_CELLS, CV_NUM_BATTERIES,
-                CONF_BAT_ARRAY_ID
+                CONF_BAT_ARRAY_ID, _LOGGER
                 )
 
 
@@ -215,13 +215,15 @@ async def to_code(config):
 
     if CONF_CELL_ARRAYS in config:
         for cell_config in config[CONF_CELL_ARRAYS]:
-            #cell_sensor = await cg.get_variable(cell_config[CONF_CELL])
-            cell = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY], cell_config[CONF_CELL]) 
-            for marker in CELL_TYPES.items():
-                if marker_config := cell_config.get(marker):
-                    sensor_var = await sensor.new_sensor(marker_config)
-                    cg.add(getattr(cell, f"set_{marker}_sensor")(sensor_var))
-            cg.add(paren.register_listener(cell))
+            cell_sensor = await cg.get_variable(cell_config[CONF_CELL])
+            _LOGGER.debug("Cell ID:  %d", cell_sensor)
+            
+            # cell = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY], cell_config[CONF_CELL]) 
+            # for marker in CELL_TYPES.items():
+            #     if marker_config := cell_config.get(marker):
+            #         sensor_var = await sensor.new_sensor(marker_config)
+            #         cg.add(getattr(cell, f"set_{marker}_sensor")(sensor_var))
+            # cg.add(paren.register_listener(cell))
 
 
 

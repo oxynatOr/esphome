@@ -151,25 +151,25 @@ BAT_TYPES: dict[str, cv.Schema] = {
 }
 
 CELL_TYPES: dict[str, cv.Schema] = {
-    CONF_CELL_VOLTAGE: sensor.sensor_schema(
+    CONF_VOLTAGE: sensor.sensor_schema(
         #PytesEBoxBatteryCellSensor,
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_VOLTAGE,
     ),
-    CONF_CELL_CURRENT: sensor.sensor_schema(
+    CONF_CURRENT: sensor.sensor_schema(
         #PytesEBoxBatteryCellSensor,
         unit_of_measurement=UNIT_AMPERE,
         accuracy_decimals=3,
         device_class=DEVICE_CLASS_CURRENT,
     ),
-    CONF_CELL_TEMPERATURE: sensor.sensor_schema(
+    CONF_TEMPERATURE: sensor.sensor_schema(
         #PytesEBoxBatteryCellSensor,
         unit_of_measurement=UNIT_CELSIUS,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_TEMPERATURE,
     ),  
-    CONF_CELL_COULOMB: sensor.sensor_schema(
+    CONF_COULOMB: sensor.sensor_schema(
         #PytesEBoxBatteryCellSensor,
         unit_of_measurement=UNIT_PERCENT,
         accuracy_decimals=0,
@@ -220,7 +220,7 @@ async def to_code(config):
             for marker, schema in CELL_TYPES.items():
                 if marker in cells_config:
                     sens = await sensor.new_sensor(cells_config[marker])
-                    cg.add(getattr(cell_var, f"set_{marker}")(sens))
+                    cg.add(getattr(cell_var, f"set_{marker}_sensor")(sens))
             cg.add(paren.register_listener(cell_var))
 
 

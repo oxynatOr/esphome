@@ -27,12 +27,6 @@ void PytesEBoxBatteryCellSensor::on_batn_line_read(bat_index_LineContents *line)
     return;    
   }  
 
-
-  /*
-  if (this->bat_num_ != line->bat_num && this->cell_num_ != line->cell_num) {
-    return;    
-  }  
-*/
   if (this->voltage_sensor_ != nullptr) {
   this->voltage_sensor_->publish_state(((float)line->cell_volt) / 1000.0f);
   }
@@ -48,20 +42,6 @@ void PytesEBoxBatteryCellSensor::on_batn_line_read(bat_index_LineContents *line)
   if (this->coulomb_sensor_ != nullptr) {
   this->coulomb_sensor_->publish_state(((float)line->cell_coulomb) / 1000.0f);
   }
-
-
-// this->cell_voltage_sensor_
-// this->cell_voltage_sensor_
-
-// this->cell_current_sensor_
-// this->cell_current_sensor_
-
-// this->cell_temperature_sensor_
-// this->cell_temperature_sensor_
-  
-// this->cell_coulomb_sensor_
-// this->cell_coulomb_sensor_
-
 }
 
 }  // namespace pytes_e_box

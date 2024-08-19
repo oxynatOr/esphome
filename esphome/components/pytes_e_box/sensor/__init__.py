@@ -184,21 +184,21 @@ cv.Schema(
 )
 
 
-BAT_SCHEMA = BAT_SCHEMA.extend(
-cv.Schema({
-    cv.use_id(PytesEBoxBatteryCellSensor): cv.Schema(   
-        {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
-    )}
-)
-)
-
-# CELL_SCHEMA = CELLS_ARRAYS_SCHEMA.extend(
+# BAT_SCHEMA = BAT_SCHEMA.extend(
 # cv.Schema({
 #     cv.use_id(PytesEBoxBatteryCellSensor): cv.Schema(   
 #         {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
 #     )}
 # )
 # )
+
+CELL_SCHEMA = BAT_SCHEMA.extend(
+cv.Schema({
+    cv.use_id(PytesEBoxBatteryCellSensor): cv.Schema(   
+        {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
+    )}
+)
+)
 
 
 #CONFIG_SCHEMA = cv.All(

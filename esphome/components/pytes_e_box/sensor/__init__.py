@@ -218,7 +218,8 @@ async def to_code(config):
             cell_var = cg.new_Pvariable(cells_config[CONF_ID])
             for marker, schema in CELL_TYPES.items():
                 if marker in cells_config:
-                    cg.add(getattr(cell_var, f"set_{marker}")(cells_config[marker]))
+                    sens = await sensor.new_sensor(cells_config[marker])
+                    cg.add(getattr(cell_var, f"set_{marker}")(sens))
             cg.add(paren.register_listener(cell_var))
 
 

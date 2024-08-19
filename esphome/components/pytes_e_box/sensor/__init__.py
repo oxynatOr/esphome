@@ -256,6 +256,14 @@ async def to_code(config):
                 cg.add(getattr(bat, f"set_{marker}_sensor")(sens))
         cg.add(paren.register_listener(bat))
 
-    # if CONF_CELL_ARRAYS in config:
-    #     for cell_config in config[CONF_CELLS]:
+    if CONF_CELL_ARRAYS in config:
+        for cell_config in config[CONF_CELLS]:
+            cell = await cg.get_variable(config[CONF_ID], config[CONF_BATTERY], cell_config[CONF_CELL_ID])
+
+            for marker in CELL_TYPES.items():
+                if marker_config := config.get(marker):
+                    sensor_var = await sensor.new_sensor(marker_config)
+                    cg.add(getattr(cell, f"set_{marker}_sensor")(sensor_var))
+                    cg.add(var.add_cell_sensor(cell))            
+
 

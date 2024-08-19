@@ -211,7 +211,15 @@ CELL_TYPES: dict[str, cv.Schema] = {
 #     )
 # )
 
-
+CELLS_ARRAYS_SCHEMA = cv.ensure_list(
+    cv.Schema(
+        {
+            cv.GenerateID(): cv.declare_id(PytesEBoxBatteryCellSensor),
+            cv.Required(CONF_CELL_ARRAY_ID): CV_NUM_CELLS,
+            cv.Optional(CONF_NAME): cv.string_strict,
+        }
+    ).extend({cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()})
+)
 
 CONFIG_SCHEMA = PYLONTECH_COMPONENT_SCHEMA.extend(
         {
@@ -221,7 +229,7 @@ CONFIG_SCHEMA = PYLONTECH_COMPONENT_SCHEMA.extend(
             cv.Optional(CONF_NAME): cv.string_strict,
             cv.Optional(CONF_CELL_ARRAYS): CELLS_ARRAYS_SCHEMA,
         }
-    ).extend({cv.Optional(marker): schema for marker, schema in TYPES.items()})
+    ).extend({cv.Optional(marker): schema for marker, schema in BAT_TYPES.items()})
 
 
 

@@ -11,10 +11,10 @@ class PytesEBoxBatteryCellSensor : public PytesEBoxListener, public Component {
   PytesEBoxBatteryCellSensor(int8_t bat_num, int8_t cell_num);
   void dump_config() override;
 
-  SUB_SENSOR(cell_voltage)
-  SUB_SENSOR(cell_current)
-  SUB_SENSOR(cell_temperature)
-  SUB_SENSOR(cell_coulomb)
+  SUB_SENSOR(voltage)
+  SUB_SENSOR(current)
+  SUB_SENSOR(temperature)
+  SUB_SENSOR(coulomb)
   
 
   //virtual void on_pwr_line_read(pwr_LineContents *line);

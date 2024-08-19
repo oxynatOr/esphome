@@ -13,10 +13,10 @@ void PytesEBoxBatteryCellSensor::dump_config() {
   ESP_LOGCONFIG(TAG, "PytesEBox Battery Cell Sensor:");
   ESP_LOGCONFIG(TAG, " Battery %d", this->bat_num_);
   ESP_LOGCONFIG(TAG, " Cell %d", this->cell_num_);
-  LOG_SENSOR("  ","Voltage",this->cell_voltage_sensor_);
-  LOG_SENSOR("  ","Current",this->cell_current_sensor_);
-  LOG_SENSOR("  ","Temperature",this->cell_temperature_sensor_);
-  LOG_SENSOR("  ","Coulomb", this->cell_coulomb_sensor_);
+  LOG_SENSOR("  ","Voltage",this->voltage_sensor_);
+  LOG_SENSOR("  ","Current",this->current_sensor_);
+  LOG_SENSOR("  ","Temperature",this->temperature_sensor_);
+  LOG_SENSOR("  ","Coulomb", this->coulomb_sensor_);
 }
 
 void PytesEBoxBatteryCellSensor::on_batn_line_read(bat_index_LineContents *line) { 
@@ -33,20 +33,20 @@ void PytesEBoxBatteryCellSensor::on_batn_line_read(bat_index_LineContents *line)
     return;    
   }  
 */
-  if (this->cell_voltage_sensor_ != nullptr) {
-  this->cell_voltage_sensor_->publish_state(((float)line->cell_volt) / 1000.0f);
+  if (this->voltage_sensor_ != nullptr) {
+  this->voltage_sensor_->publish_state(((float)line->cell_volt) / 1000.0f);
   }
   
-  if (this->cell_current_sensor_ != nullptr) {
-  this->cell_current_sensor_->publish_state(((float)line->cell_curr) / 1000.0f);
+  if (this->current_sensor_ != nullptr) {
+  this->current_sensor_->publish_state(((float)line->cell_curr) / 1000.0f);
   }
   
-  if (this->cell_temperature_sensor_ != nullptr) {
-  this->cell_temperature_sensor_->publish_state(((float)line->cell_tempr) / 1000.0f);
+  if (this->temperature_sensor_ != nullptr) {
+  this->temperature_sensor_->publish_state(((float)line->cell_tempr) / 1000.0f);
   }
 
-  if (this->cell_coulomb_sensor_ != nullptr) {
-  this->cell_coulomb_sensor_->publish_state(((float)line->cell_coulomb) / 1000.0f);
+  if (this->coulomb_sensor_ != nullptr) {
+  this->coulomb_sensor_->publish_state(((float)line->cell_coulomb) / 1000.0f);
   }
 
 

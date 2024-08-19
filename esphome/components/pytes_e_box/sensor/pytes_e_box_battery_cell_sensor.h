@@ -17,8 +17,8 @@ class PytesEBoxBatteryCellSensor : public PytesEBoxListener, public Component {
   SUB_SENSOR(coulomb)
   
 
-  //virtual void on_pwr_line_read(pwr_LineContents *line);
-  //virtual void on_pwrn_line_read(pwr_data_LineContents *line);
+  virtual void on_pwr_line_read(pwr_LineContents *line);
+  virtual void on_pwrn_line_read(pwr_data_LineContents *line);
   virtual void on_batn_line_read(bat_index_LineContents *line);
 
  protected:

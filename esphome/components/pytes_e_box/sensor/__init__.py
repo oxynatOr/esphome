@@ -264,6 +264,7 @@ async def to_code(config):
                 if marker_config := cell_config.get(marker):
                     sensor_var = await sensor.new_sensor(marker_config)
                     cg.add(getattr(cell, f"set_{marker}_sensor")(sensor_var))
-                    cg.add(var.add_cell_sensor(cell))            
+            cg.add(paren.register_listener(cell))
+                    
 
 

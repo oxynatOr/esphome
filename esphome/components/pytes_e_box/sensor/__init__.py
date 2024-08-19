@@ -1,3 +1,4 @@
+#import logging
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
@@ -6,6 +7,7 @@ from esphome.const import (
     CONF_CURRENT,
     CONF_TEMPERATURE,
     CONF_ID,
+    CONF_NAME,    
     UNIT_VOLT,
     UNIT_AMPERE,
     UNIT_CELSIUS,

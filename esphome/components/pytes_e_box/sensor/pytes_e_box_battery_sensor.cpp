@@ -29,7 +29,7 @@ void PytesEBoxBatterySensor::dump_config() {
   LOG_SENSOR("  ", "Total Power In", this->total_power_in_sensor_);
   LOG_SENSOR("  ", "Total Power Out", this->total_power_out_sensor_);
   LOG_SENSOR("  ", "Work Status", this->work_status_sensor_);
-  LOG_SENSOR("  ", "Cells", this->cells_sensor_);
+  LOG_SENSOR("  ", "Cell Count", this->cell_count_sensor_);
 
   // LOG_SENSOR("  ", "Cell_Voltage",this->cell_voltage_sensor_);
   // LOG_SENSOR("  ", "Cell_Current",this->cell_current_sensor_);
@@ -85,8 +85,8 @@ void PytesEBoxBatterySensor::on_pwrn_line_read(pwr_data_LineContents *line) {
   if (this->work_status_sensor_ != nullptr) {
     this->work_status_sensor_->publish_state(line->workStatus);
   }
-  if (this->cells_sensor_ != nullptr) {
-    this->cells_sensor_->publish_state(line->cells);
+  if (this->cell_count_sensor_ != nullptr) {
+    this->cell_count_sensor_->publish_state(line->cells);
   }  
 
  }

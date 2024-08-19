@@ -24,7 +24,7 @@ class PytesEBoxBatterySensor : public PytesEBoxListener, public Component {
   SUB_SENSOR(total_power_in)
   SUB_SENSOR(total_power_out)
   SUB_SENSOR(work_status)
-  SUB_SENSOR(cells)
+  SUB_SENSOR(cell_count)
 
 
   virtual void on_pwr_line_read(pwr_LineContents *line);

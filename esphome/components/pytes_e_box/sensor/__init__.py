@@ -218,7 +218,7 @@ CELLS_ARRAYS_SCHEMA = cv.ensure_list(
     cv.Schema(
         {
             cv.GenerateID(): cv.declare_id(PytesEBoxBatteryCellSensor),
-            cv.Required(CONF_CELL_ARRAY_ID): CV_NUM_CELLS,
+            cv.Required(CONF_CELL): CV_NUM_CELLS,
             cv.Optional(CONF_NAME): cv.string_strict,
         }
     ).extend({cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()})
@@ -338,3 +338,7 @@ async def to_code(config):
                 sens = await sensor.new_sensor(marker_config)
                 cg.add(getattr(bat, f"set_{marker}_sensor")(sens))
         cg.add(paren.register_listener(bat))
+
+    # if CONF_CELL_ARRAYS in config:
+    #     for cell_config in config[CONF_CELLS]:
+

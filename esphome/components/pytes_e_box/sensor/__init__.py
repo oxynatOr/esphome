@@ -215,15 +215,22 @@ async def to_code(config):
 
     if CONF_CELL_ARRAYS in config:
         for cells_config in config[CONF_CELL_ARRAYS]:
-            if cell_config := config.get(cells_config[CONF_CELL]):
-                cell_sensor = await cg.get_variable(cell_config[CONF_CELL])
-                #cell = cg.new_Pvariable(cell_sensor)
-                cell = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY], cell_sensor) 
-                for marker in CELL_TYPES.items():
-                    if marker_config := cell_config.get(marker):
-                        sensor_var = await sensor.new_sensor(marker_config)
-                        cg.add(getattr(cell, f"set_{marker}_sensor")(sensor_var))
-                cg.add(paren.register_listener(cell))
+            cell_var = cg.new_Pvariable(cell_config[CONF_ID])
+            for marker, schema in CELL_TYPES.items():
+                if marker in cell_config:
+                    cg.add(getattr(cell_var, f"set_{marker}")(cell_config[marker]))
+            cg.add(paren.register_listener(cell_var))
+
+
+            # if cell_config := config.get(cells_config[CONF_CELL]):
+            #     cell_sensor = await cg.get_variable(cell_config[CONF_CELL])
+            #     #cell = cg.new_Pvariable(cell_sensor)
+            #     cell = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY], cell_sensor) 
+            #     for marker in CELL_TYPES.items():
+            #         if marker_config := cell_config.get(marker):
+            #             sensor_var = await sensor.new_sensor(marker_config)
+            #             cg.add(getattr(cell, f"set_{marker}_sensor")(sensor_var))
+            #     cg.add(paren.register_listener(cell))
 
 
 

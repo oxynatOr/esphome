@@ -37,10 +37,10 @@ void PytesEBoxBatterySensor::dump_config() {
   // LOG_SENSOR("  ", "Cell_Coulomb", this->cell_coulomb_sensor_);
 }
 
-void PytesEBoxBatterySensor::on_batn_line_read(bat_index_LineContents *line) { 
-  return;
+// void PytesEBoxBatterySensor::on_batn_line_read(bat_index_LineContents *line) { 
+//   return;
 
-}
+// }
 
 void PytesEBoxBatterySensor::on_pwrn_line_read(pwr_data_LineContents *line) { 
   if (this->bat_num_ != line->bat_num) {

@@ -19,13 +19,48 @@ void PytesEBoxBatteryCellSensor::dump_config() {
   LOG_SENSOR("  ","Coulomb", this->cell_coulomb_sensor_);
 }
 
-void PytesEBoxBatteryCellSensor::on_batn_line_read(bat_index_LineContents *line) { return; 
+void PytesEBoxBatteryCellSensor::on_batn_line_read(bat_index_LineContents *line) { 
   if (this->bat_num_ != line->bat_num) {
     return;    
   }
   if (this->cell_num_ != line->bat_num) {
     return;    
   }  
+
+
+  /*
+  if (this->bat_num_ != line->bat_num && this->cell_num_ != line->cell_num) {
+    return;    
+  }  
+*/
+  if (this->cell_voltage_sensor_ != nullptr) {
+  this->cell_voltage_sensor_->publish_state(((float)line->cell_volt) / 1000.0f);
+  }
+  
+  if (this->cell_current_sensor_ != nullptr) {
+  this->cell_current_sensor_->publish_state(((float)line->cell_curr) / 1000.0f);
+  }
+  
+  if (this->cell_temperature_sensor_ != nullptr) {
+  this->cell_temperature_sensor_->publish_state(((float)line->cell_tempr) / 1000.0f);
+  }
+
+  if (this->cell_coulomb_sensor_ != nullptr) {
+  this->cell_coulomb_sensor_->publish_state(((float)line->cell_coulomb) / 1000.0f);
+  }
+
+
+// this->cell_voltage_sensor_
+// this->cell_voltage_sensor_
+
+// this->cell_current_sensor_
+// this->cell_current_sensor_
+
+// this->cell_temperature_sensor_
+// this->cell_temperature_sensor_
+  
+// this->cell_coulomb_sensor_
+// this->cell_coulomb_sensor_
 
 }
 

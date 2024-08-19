@@ -258,10 +258,10 @@ async def to_code(config):
 
     if CONF_CELL_ARRAYS in config:
         for cell_config in config[CONF_CELLS]:
-            cell = await cg.get_variable(config[CONF_ID], config[CONF_BATTERY], config[CONF_CELL])
+            cell = await cg.get_variable(config[CONF_ID], config[CONF_BATTERY], cell_config[CONF_CELL])
 
             for marker in CELL_TYPES.items():
-                if marker_config := config.get(marker):
+                if marker_config := cell_config.get(marker):
                     sensor_var = await sensor.new_sensor(marker_config)
                     cg.add(getattr(cell, f"set_{marker}_sensor")(sensor_var))
                     cg.add(var.add_cell_sensor(cell))            

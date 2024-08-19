@@ -183,7 +183,8 @@ cv.Schema(
 )
 )
 
-CELL_SCHEMA = CELLS_ARRAYS_SCHEMA.extend(
+
+BAT_SCHEMA = BAT_SCHEMA.extend(
 cv.Schema({
     cv.use_id(PytesEBoxBatteryCellSensor): cv.Schema(   
         {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
@@ -191,18 +192,50 @@ cv.Schema({
 )
 )
 
+# CELL_SCHEMA = CELLS_ARRAYS_SCHEMA.extend(
+# cv.Schema({
+#     cv.use_id(PytesEBoxBatteryCellSensor): cv.Schema(   
+#         {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
+#     )}
+# )
+# )
+
 
 #CONFIG_SCHEMA = cv.All(
 CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
     cv.Schema(
         {
             cv.Optional(CONF_BATTERY): BAT_SCHEMA,
-            cv.Optional(CONF_CELL_ARRAYS): CELL_SCHEMA,            
+            #cv.Optional(CONF_CELL_ARRAYS): CELL_SCHEMA,            
         }
     )
 )
 
 
+
+
+
+# BATTERY_SCHEMA = cv.Schema(
+#         {
+#             cv.GenerateID(CONF_PYTES_E_BOX_ID): cv.use_id(PytesEBoxComponent),
+#             #cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor),
+#             cv.Required(CONF_BATTERY): CV_NUM_BATTERIES,
+#             cv.Optional(CONF_NAME): cv.string_strict,
+#             cv.Optional(CONF_CELL): cv.use_id(PytesEBoxBatteryCellSensor),
+#         }
+#     )
+
+
+
+# CELLS_ARRAYS_SCHEMA = cv.ensure_list(
+#     cv.Schema(
+#         {
+#             cv.GenerateID(): cv.declare_id(PytesEBoxBatteryCellSensor),
+#             cv.Required(CONF_CELL_ARRAY_ID): CV_NUM_CELLS,
+#             cv.Optional(CONF_NAME): cv.string_strict,
+#         }
+#     )
+# )
 
 
 # CELL_ARRAYS_SCHEMA = CELLS_ARRAYS_SCHEMA.extend(

@@ -63,8 +63,7 @@ BATTERY_SCHEMA = cv.Schema(
             cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor),
             cv.Required(CONF_BAT_ARRAY_ID): CV_NUM_BATTERIES,
             cv.Optional(CONF_NAME): cv.string_strict,
-            cv.Optional(CONF_CELL_ARRAY_ID): cv.use_id(PytesEBoxBatteryCellSensor),
-
+            cv.Optional(CONF_CELL_ARRAYS): CELLS_ARRAYS_SCHEMA,
         }
     )
 

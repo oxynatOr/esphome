@@ -177,14 +177,22 @@ CELL_TYPES: dict[str, cv.Schema] = {
     #state_class=STATE_CLASS_MEASUREMENT,    
 }
 
-BAT_SCHEMA = BATTERY_SCHEMA.extend(
-cv.Schema(
-    {cv.Optional(marker): schema for marker, schema in BAT_TYPES.items()}
-)
-)
+# BAT_SCHEMA = BATTERY_SCHEMA.extend(
+# cv.Schema(
+#     {cv.Optional(marker): schema for marker, schema in BAT_TYPES.items()}
+# )
+# )
 
 
-# BAT_SCHEMA = BAT_SCHEMA.extend(
+# # BAT_SCHEMA = BAT_SCHEMA.extend(
+# # cv.Schema({
+# #     cv.use_id(PytesEBoxBatteryCellSensor): cv.Schema(   
+# #         {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
+# #     )}
+# # )
+# # )
+
+# CELL_SCHEMA = BAT_SCHEMA.extend(
 # cv.Schema({
 #     cv.use_id(PytesEBoxBatteryCellSensor): cv.Schema(   
 #         {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
@@ -192,26 +200,28 @@ cv.Schema(
 # )
 # )
 
-CELL_SCHEMA = BAT_SCHEMA.extend(
-cv.Schema({
-    cv.use_id(PytesEBoxBatteryCellSensor): cv.Schema(   
-        {cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()}    
-    )}
-)
-)
+
+# #CONFIG_SCHEMA = cv.All(
+# CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
+#     cv.Schema(
+#         {
+#             cv.Optional(CONF_BATTERY): BAT_SCHEMA,
+#             #cv.Optional(CONF_CELL_ARRAYS): CELL_SCHEMA,            
+#         }
+#     )
+# )
 
 
-#CONFIG_SCHEMA = cv.All(
-CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
-    cv.Schema(
+
+CONFIG_SCHEMA = PYLONTECH_COMPONENT_SCHEMA.extend(
         {
-            cv.Optional(CONF_BATTERY): BAT_SCHEMA,
-            #cv.Optional(CONF_CELL_ARRAYS): CELL_SCHEMA,            
+            #cv.GenerateID(CONF_PYTES_E_BOX_ID): cv.use_id(PytesEBoxComponent),
+            cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor),
+            cv.Required(CONF_BAT_ARRAY_ID): CV_NUM_BATTERIES,
+            cv.Optional(CONF_NAME): cv.string_strict,
+            cv.Optional(CONF_CELL_ARRAYS): CELLS_ARRAYS_SCHEMA,
         }
-    )
-)
-
-
+    ).extend({cv.Optional(marker): schema for marker, schema in TYPES.items()})
 
 
 
@@ -308,16 +318,12 @@ CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
 
 async def to_code(config):
     paren = await cg.get_variable(config[CONF_PYTES_E_BOX_ID])
-    bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
+    
 
-    for marker in BAT_TYPES:
-        if marker_config := config.get(marker):
-            sens = await sensor.new_sensor(marker_config)
-            cg.add(getattr(bat, f"set_{marker}_sensor")(sens))
-
-    cg.add(paren.register_listener(bat))
-
-
-
-
-
+    if CONF_BATTERY in config:
+        bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
+        for marker in BAT_TYPES:
+            if marker_config := config.get(marker):
+                sens = await sensor.new_sensor(marker_config)
+                cg.add(getattr(bat, f"set_{marker}_sensor")(sens))
+        cg.add(paren.register_listener(bat))

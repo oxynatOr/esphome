@@ -15,7 +15,7 @@ void PytesEBoxBatteryCellTextSensor::dump_config() {
   ESP_LOGCONFIG(TAG, " Cell %d", this->cell_num_);
   
   LOG_TEXT_SENSOR("  ","Cell Base State", this->base_state_text_sensor_);
-  LOG_TEXT_SENSOR("  ","Cell Voltage State", this->voltage_sate_text_sensor_);
+  LOG_TEXT_SENSOR("  ","Cell Voltage State", this->voltage_state_text_sensor_);
   LOG_TEXT_SENSOR("  ","Cell Current State", this->current_state_text_sensor_);
   LOG_TEXT_SENSOR("  ","Cell Temperature State", this->temperature_state_text_sensor_);
 
@@ -34,8 +34,8 @@ void PytesEBoxBatteryCellTextSensor::on_batn_line_read(bat_index_LineContents *l
   base_state_text_sensor_->publish_state(std::string(line->cell_baseState));
   }
 
-  if (this->voltage_sate_text_sensor_ != nullptr) {
-  voltage_sate_text_sensor_->publish_state(std::string(line->cell_voltState));
+  if (this->voltage_state_text_sensor_ != nullptr) {
+  voltage_state_text_sensor_->publish_state(std::string(line->cell_voltState));
   }
   
   if (this->current_state_text_sensor_ != nullptr) {

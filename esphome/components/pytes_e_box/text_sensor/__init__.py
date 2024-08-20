@@ -1,34 +1,16 @@
-#import logging
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import text_sensor
 from esphome.const import (
-    CONF_VOLTAGE,
-    CONF_CURRENT,
-    CONF_TEMPERATURE,
     CONF_ID,
-    CONF_NAME,    
-    UNIT_VOLT,
-    UNIT_AMPERE,
-    UNIT_CELSIUS,
-    UNIT_PERCENT,
-    STATE_CLASS_MEASUREMENT,
-    DEVICE_CLASS_EMPTY,
-    DEVICE_CLASS_VOLTAGE,
-    DEVICE_CLASS_CURRENT,
-    DEVICE_CLASS_TEMPERATURE,
-    DEVICE_CLASS_BATTERY
+    CONF_NAME,       
     )
 
-from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, CONF_BAT_ARRAY_ID,
-                CONF_BATTERIES_COMPONENT, CONF_PYTES_E_BOX_ID, CONF_BATTERY, CONF_CELL_ARRAYS, CONF_CELL_ARRAY_ID, 
-                CV_NUM_CELLS, CV_NUM_BATTERIES
-                
+from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, 
+                CONF_BATTERY, CONF_CELL_ARRAYS, CV_NUM_CELLS, CV_NUM_BATTERIES,
+                PytesEBoxBatteryTextSensor, PytesEBoxBatteryCellTextSensor
                 )
 
-
-PytesEBoxBatteryTextSensor = pytes_e_box_ns.class_("PytesEBoxBatteryTextSensor", cg.Component)
-PytesEBoxBatteryCellTextSensor = pytes_e_box_ns.class_("PytesEBoxBatteryCellTextSensor", cg.Component)
 
 CONF_BASE_STATE = "base_state"
 CONF_VOLTAGE_STATE = "voltage_state"
@@ -73,8 +55,6 @@ CELL_TYPES: list[str] = [
     CONF_TEMPERATURE_STATE,
 ]
 
-
-
 CELLS_ARRAYS_SCHEMA = cv.ensure_list(
     cv.Schema(
         {
@@ -84,8 +64,6 @@ CELLS_ARRAYS_SCHEMA = cv.ensure_list(
         }
     ).extend({cv.Optional(marker): text_sensor.text_sensor_schema() for marker in CELL_TYPES})
 )
-
-
 
 CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
         {
@@ -104,7 +82,7 @@ async def to_code(config):
         bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
         for marker in BAT_TYPES:
             if marker_config := config.get(marker):
-                sens = await text_sensor.new_sensor(marker_config)
+                sens = await text_sensor.new_text_sensor(marker_config)                
                 cg.add(getattr(bat, f"set_{marker}_text_sensor")(sens))
         cg.add(paren.register_listener(bat))    
 
@@ -112,7 +90,7 @@ async def to_code(config):
         for cells_config in config[CONF_CELL_ARRAYS]:
             cell_var = cg.new_Pvariable(cells_config[CONF_ID], config[CONF_BATTERY], cells_config[CONF_CELL])
             for marker in CELL_TYPES:
-                if marker in cells_config:
-                    sens = await text_sensor.new_sensor(cells_config[marker])
+                if marker in cells_config:                    
+                    sens = await text_sensor.new_text_sensor(cells_config[marker])
                     cg.add(getattr(cell_var, f"set_{marker}_text_sensor")(sens))
             cg.add(paren.register_listener(cell_var))

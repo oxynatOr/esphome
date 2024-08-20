@@ -21,15 +21,10 @@ from esphome.const import (
     )
 
 from .. import (pytes_e_box_ns ,CONF_PYTES_E_BOX_ID, PYTES_E_BOX_COMPONENT_SCHEMA, CONF_CELL, PytesEBoxBatteryCellSensor, PytesEBoxBatterySensor,
-                CONF_BATTERIES_COMPONENT, CONF_PYTES_E_BOX_ID, CONF_BATTERY, CONF_CELL_ARRAYS, CONF_CELL_ARRAY_ID, CV_NUM_CELLS, CV_NUM_BATTERIES,
-                CONF_BAT_ARRAY_ID, _LOGGER
+                CONF_BATTERY, CONF_CELL_ARRAYS, CV_NUM_CELLS, CV_NUM_BATTERIES, UNIT_AMPERE_HOURS
                 )
 
 
-
-
-##Custom 
-UNIT_AMPERE_HOURS       = "Ah"
 
 CONF_COULOMB            = "coulomb"
 CONF_TEMPERATURE_LOW    = "temperature_low"
@@ -49,10 +44,6 @@ CONF_CELL_VOLTAGE       = "voltage"
 CONF_CELL_TEMPERATURE   = "temperature"
 CONF_CELL_COULOMB       = "coulomb"
 CONF_CELL_CURRENT       = "current"
-
-
-CONF_BATTERY_ID         = "battery_sensor"
-CONF_CELL_ID            = "cell_sensor"
 
 
 BAT_TYPES: dict[str, cv.Schema] = {

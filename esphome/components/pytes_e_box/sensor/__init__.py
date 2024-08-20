@@ -193,7 +193,6 @@ CELLS_ARRAYS_SCHEMA = cv.ensure_list(
 
 CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
         {
-            #cv.GenerateID(CONF_PYTES_E_BOX_ID): cv.use_id(PytesEBoxComponent),
             cv.GenerateID(): cv.declare_id(PytesEBoxBatterySensor),
             cv.Required(CONF_BATTERY): CV_NUM_BATTERIES,
             cv.Optional(CONF_NAME): cv.string_strict,
@@ -215,77 +214,9 @@ async def to_code(config):
 
     if CONF_CELL_ARRAYS in config:
         for cells_config in config[CONF_CELL_ARRAYS]:
-            #cell_id = await cg.get_variable(cells_config[CONF_CELL])
             cell_var = cg.new_Pvariable(cells_config[CONF_ID], config[CONF_BATTERY], cells_config[CONF_CELL])
             for marker, schema in CELL_TYPES.items():
                 if marker in cells_config:
                     sens = await sensor.new_sensor(cells_config[marker])
                     cg.add(getattr(cell_var, f"set_{marker}_sensor")(sens))
             cg.add(paren.register_listener(cell_var))
-
-
-            # if cell_config := config.get(cells_config[CONF_CELL]):
-            #     cell_sensor = await cg.get_variable(cell_config[CONF_CELL])
-            #     #cell = cg.new_Pvariable(cell_sensor)
-            #     cell = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY], cell_sensor) 
-            #     for marker in CELL_TYPES.items():
-            #         if marker_config := cell_config.get(marker):
-            #             sensor_var = await sensor.new_sensor(marker_config)
-            #             cg.add(getattr(cell, f"set_{marker}_sensor")(sensor_var))
-            #     cg.add(paren.register_listener(cell))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# CONFIG_SCHEMA = cv.Schema(
-#     {
-#         cv.GenerateID(): cv.declare_id(PytesEBoxComponent),
-#         cv.Optional(CONF_BATTERIES): cv.All(cv.ensure_list(cv.Schema({
-#             cv.GenerateID(CONF_BATTERY_ID): cv.declare_id(PytesEBoxBatterySensor),
-#             cv.Required(CONF_BATTERY_ID): CV_NUM_BATTERIES,
-#             cv.Optional(CONF_BATTERY_ID): BAT_SCHEMA,
-#             #cv.Optional(CONF_CELL): CV_NUM_CELLS,
-
-#         }))),
-#         cv.Optional(CONF_CELLS): cv.All(cv.ensure_list(cv.Schema({
-#             cv.Required(CONF_BATTERY_ID): cv.use_id(PytesEBoxBatterySensor),
-#             cv.Required(cv.GenerateID(CONF_CELL_ID)): cv.declare_id(PytesEBoxBatteryCellSensor),
-#             cv.Optional(CONF_BATTERY_ID): CELL_SCHEMA,
-
-#         }))),            
-#         #cv.Required(CONF_CMD_IDLE_TIME): cv.positive_time_period_milliseconds,
-#     }
-# )
-# if CONF_BATTERIES in config:
-#     for battery_config in config[CONF_BATTERIES]:
-#         battery_sensor = await cg.get_variable(battery_config[CONF_BATTERY_ID])
-#         battery = cg.new_Pvariable(battery_sensor)
-#         for marker, sensor_schema in BAT_TYPES.items():
-#             if marker in battery_config:
-#                 sensor_var = await sensor.new_sensor(battery_config[marker])
-#                 cg.add(getattr(battery, f"set_{marker}_sensor")(sensor_var))
-#                 cg.add(var.add_battery_sensor(battery_sensor))
-
-# if CONF_CELLS in config:
-#     for cell_config in config[CONF_CELLS]:
-#         battery_sensor = await cg.get_variable(cell_config[CONF_BATTERY_ID])
-#         for cell in cell_config[CONF_CELLS]:
-#             cell_sensor = await cg.get_variable(cell[CONF_CELL_ID])
-#             cell_var = cg.new_Pvariable(cell_sensor)
-#             for marker, sensor_schema in CELL_TYPES.items():
-#                 if marker in cell:
-#                     sensor_var = await sensor.new_sensor(cell[marker])
-#                     cg.add(getattr(cell_var, f"set_{marker}_sensor")(sensor_var))
-#                     cg.add(var.add_cell_sensor(cell_var))

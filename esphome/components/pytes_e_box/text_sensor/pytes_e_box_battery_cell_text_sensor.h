@@ -13,7 +13,7 @@ class PytesEBoxBatteryCellTextSensor : public PytesEBoxListener, public Componen
   void dump_config() override;
 
   SUB_TEXT_SENSOR(base_state)
-  SUB_TEXT_SENSOR(voltage_sate)
+  SUB_TEXT_SENSOR(voltage_state)
   SUB_TEXT_SENSOR(current_state)
   SUB_TEXT_SENSOR(temperature_state)
 

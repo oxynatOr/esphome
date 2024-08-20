@@ -31,10 +31,6 @@ void PytesEBoxBatterySensor::dump_config() {
   LOG_SENSOR("  ", "Work Status", this->work_status_sensor_);
   LOG_SENSOR("  ", "Cell Count", this->cell_count_sensor_);
 
-  // LOG_SENSOR("  ", "Cell_Voltage",this->cell_voltage_sensor_);
-  // LOG_SENSOR("  ", "Cell_Current",this->cell_current_sensor_);
-  // LOG_SENSOR("  ", "Cell_Temperature",this->cell_temperature_sensor_);
-  // LOG_SENSOR("  ", "Cell_Coulomb", this->cell_coulomb_sensor_);
 }
 
 void PytesEBoxBatterySensor::on_batn_line_read(bat_index_LineContents *line) { 

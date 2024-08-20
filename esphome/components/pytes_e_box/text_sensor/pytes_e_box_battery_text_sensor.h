@@ -9,7 +9,6 @@ namespace pytes_e_box {
 class PytesEBoxBatteryTextSensor : public PytesEBoxListener, public Component {
  public:
   PytesEBoxBatteryTextSensor(int8_t bat_num);
-  PytesEBoxBatteryTextSensor(int8_t bat_num,int8_t cell_num); 
 
   void dump_config() override;
 
@@ -30,11 +29,6 @@ class PytesEBoxBatteryTextSensor : public PytesEBoxListener, public Component {
   SUB_TEXT_SENSOR(power_events)
   SUB_TEXT_SENSOR(system_fault)
 
-  SUB_TEXT_SENSOR(cell_base_state)
-  SUB_TEXT_SENSOR(cell_voltage_sate)
-  SUB_TEXT_SENSOR(cell_current_state)
-  SUB_TEXT_SENSOR(cell_temperature_state)
-
 
   virtual void on_pwr_line_read(pwr_LineContents *line);
   virtual void on_pwrn_line_read(pwr_data_LineContents *line);
@@ -43,7 +37,7 @@ class PytesEBoxBatteryTextSensor : public PytesEBoxListener, public Component {
 
  protected:
   int8_t bat_num_;
-  int8_t cell_num_;
+
 };
 
 }  // namespace pytes_e_box

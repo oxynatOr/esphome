@@ -8,10 +8,9 @@ namespace pytes_e_box {
 //static const char *const TAG_BTS = "pytes_e_box.textsensor";
 
 PytesEBoxBatteryTextSensor::PytesEBoxBatteryTextSensor(int8_t bat_num) { this->bat_num_ = bat_num; }
-PytesEBoxBatteryTextSensor::PytesEBoxBatteryTextSensor(int8_t bat_num, int8_t cell_num) { this->bat_num_ = bat_num; this->cell_num_ = cell_num; }
 
 void PytesEBoxBatteryTextSensor::dump_config() {
-  ESP_LOGCONFIG(TAG, "PytesEBox Text Sensor:");
+  ESP_LOGCONFIG(TAG, "PytesEBox Battery Text Sensor:");
   ESP_LOGCONFIG(TAG, " Battery %d", this->bat_num_);
 
   LOG_TEXT_SENSOR("  ", "Base state", this->base_state_text_sensor_);
@@ -30,11 +29,6 @@ void PytesEBoxBatteryTextSensor::dump_config() {
   LOG_TEXT_SENSOR("  ","Bat Events", this->bat_events_text_sensor_);
   LOG_TEXT_SENSOR("  ","Power Events", this->power_events_text_sensor_);
   LOG_TEXT_SENSOR("  ","System Fault", this->system_fault_text_sensor_);
-
-  LOG_TEXT_SENSOR("  ","Cell Base State", this->cell_base_state_text_sensor_);
-  LOG_TEXT_SENSOR("  ","Cell Voltage State", this->cell_voltage_sate_text_sensor_);
-  LOG_TEXT_SENSOR("  ","Cell Current State", this->cell_current_state_text_sensor_);
-  LOG_TEXT_SENSOR("  ","Cell Temperature State", this->cell_temperature_state_text_sensor_);
 
 }
 
@@ -92,27 +86,8 @@ void PytesEBoxBatteryTextSensor::on_pwrn_line_read(pwr_data_LineContents *line) 
   }
 
 }
-void PytesEBoxBatteryTextSensor::on_batn_line_read(bat_index_LineContents *line) { 
-  if (this->bat_num_ != line->bat_num && this->cell_num_ != line->cell_num) {
-    return;    
-  }  
-   
-  if (this->cell_base_state_text_sensor_ != nullptr) {
-  cell_base_state_text_sensor_->publish_state(std::string(line->cell_baseState));
-  }
-
-  if (this->cell_voltage_sate_text_sensor_ != nullptr) {
-  cell_voltage_sate_text_sensor_->publish_state(std::string(line->cell_voltState));
-  }
-  
-  if (this->cell_current_state_text_sensor_ != nullptr) {
-  cell_current_state_text_sensor_->publish_state(std::string(line->cell_currState));
-  }
-
-  if (this->cell_temperature_state_text_sensor_ != nullptr) {
-  cell_temperature_state_text_sensor_->publish_state(std::string(line->cell_tempState));
-  }
-
+void PytesEBoxBatteryTextSensor::on_batn_line_read(bat_index_LineContents *line) {   
+  return;    
 }
 
 

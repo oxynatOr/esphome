@@ -250,7 +250,7 @@ void PytesEBoxComponent::loop() {
       static char buffer[MAX_DATA_LINE_LENGTH];
       if(readline(read(), buffer, MAX_DATA_LENGTH_BYTES) > 0) {
         this->buffer_[buffer_index_write_] = buffer;
-        ESP_LOGVV(TAG, "(%d) %s",this->buffer_index_write_, buffer);
+        ESP_LOGD(TAG, "(%d) %s",this->buffer_index_write_, buffer);
       if (this->isLineComplete(this->buffer_[buffer_index_write_]) > 0) {
           this->state_ = STATE_POLL_COMPLETE;
           ESP_LOGVV(TAG, "Data Complete");

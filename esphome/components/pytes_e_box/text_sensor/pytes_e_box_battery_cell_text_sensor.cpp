@@ -26,9 +26,13 @@ void PytesEBoxBatteryCellTextSensor::on_pwrn_line_read(pwr_data_LineContents *li
   return;
 }
 void PytesEBoxBatteryCellTextSensor::on_batn_line_read(bat_index_LineContents *line) { 
-  if (this->bat_num_ != line->bat_num && this->cell_num_ != line->cell_num) {
+  if (this->bat_num_ != line->bat_num) {
+    return;    
+  }
+  if (this->cell_num_ != line->cell_num) {
     return;    
   }  
+
    
   if (this->base_state_text_sensor_ != nullptr) {
   base_state_text_sensor_->publish_state(std::string(line->cell_baseState));

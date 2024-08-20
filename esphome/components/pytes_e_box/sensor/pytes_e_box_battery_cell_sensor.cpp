@@ -44,7 +44,7 @@ void PytesEBoxBatteryCellSensor::on_batn_line_read(bat_index_LineContents *line)
   }
 
   if (this->coulomb_sensor_ != nullptr) {
-  this->coulomb_sensor_->publish_state(((float)line->cell_coulomb) / 1000.0f);
+  this->coulomb_sensor_->publish_state(((float)line->cell_coulomb));
   }
 }
 

@@ -102,15 +102,15 @@ async def to_code(config):
         bat = cg.new_Pvariable(config[CONF_ID], config[CONF_BATTERY])
         for marker in BAT_TYPES:
             if marker_config := config.get(marker):
-                sens = await sensor.new_sensor(marker_config)
+                sens = await text_sensor.new_sensor(marker_config)
                 cg.add(getattr(bat, f"set_{marker}_text_sensor")(sens))
         cg.add(paren.register_listener(bat))    
 
     if CONF_CELL_ARRAYS in config:
         for cells_config in config[CONF_CELL_ARRAYS]:
             cell_var = cg.new_Pvariable(cells_config[CONF_ID], config[CONF_BATTERY], cells_config[CONF_CELL])
-            for marker, schema in CELL_TYPES.items():
+            for marker in CELL_TYPES:
                 if marker in cells_config:
-                    sens = await sensor.new_sensor(cells_config[marker])
+                    sens = await text_sensor.new_sensor(cells_config[marker])
                     cg.add(getattr(cell_var, f"set_{marker}_text_sensor")(sens))
             cg.add(paren.register_listener(cell_var))

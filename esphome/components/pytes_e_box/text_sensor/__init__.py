@@ -82,8 +82,10 @@ CELLS_ARRAYS_SCHEMA = cv.ensure_list(
             cv.Required(CONF_CELL): CV_NUM_CELLS,
             cv.Optional(CONF_NAME): cv.string_strict,
         }
-    ).extend({cv.Optional(marker): schema for marker, schema in CELL_TYPES.items()})
+    ).extend({cv.Optional(marker): text_sensor.text_sensor_schema() for marker in CELL_TYPES})
 )
+
+
 
 CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
         {
@@ -92,7 +94,7 @@ CONFIG_SCHEMA = PYTES_E_BOX_COMPONENT_SCHEMA.extend(
             cv.Optional(CONF_NAME): cv.string_strict,
             cv.Optional(CONF_CELL_ARRAYS): CELLS_ARRAYS_SCHEMA,
         }
-    ).extend({cv.Optional(marker): schema for marker, schema in BAT_TYPES.items()})
+    ).extend({cv.Optional(marker): text_sensor.text_sensor_schema() for marker in BAT_TYPES})
            
 
 async def to_code(config):

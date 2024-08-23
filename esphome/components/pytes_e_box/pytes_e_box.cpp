@@ -126,7 +126,7 @@ void PytesEBoxComponent::loop() {
     this->command_queue_position_ = (this->command_queue_position_+1) % COMMAND_QUEUE_LENGTH;
     if (this->command_queue_position_ == this->command_queue_max_) { 
       this->state_ = STATE_IDLE; 
-      ESP_LOGW(TAG, "Command queue done. Idle for xSec");
+      ESP_LOGI(TAG, "PytesEBox command queue done.");
       return; 
       }
     if (this->send_next_command_() == 0) {

@@ -121,6 +121,8 @@ void PytesEBoxComponent::loop() {
 
   /** command queue */
   if (this->state_ == STATE_SEND_NEXT_COMMAND) {
+  if (millis() - this->last_poll_ <= this->command_idle_time_) { return; }
+
     this->command_queue_position_ = (this->command_queue_position_+1) % COMMAND_QUEUE_LENGTH;
     if (this->command_queue_position_ == this->command_queue_max_) { 
       this->state_ = STATE_IDLE; 

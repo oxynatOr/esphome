@@ -79,7 +79,7 @@ pytes_e_box_ns = cg.esphome_ns.namespace("pytes_e_box")
 PytesEBoxComponent = pytes_e_box_ns.class_("PytesEBoxComponent", cg.PollingComponent, uart.UARTDevice)
 CONF_BATTERIES_COMPONENT = "batteries"
 CONF_POLL_TIMEOUT = "poll_timeout"
-#CONF_CMD_IDLE_TIME = "command_idle_time" 
+CONF_CMD_IDLE_TIME = "command_idle_time" 
 CONF_PYTES_E_BOX_ID = "pytes_e_box_id"
 CONF_CELL = "cell"
 CONF_BATTERY = "battery"
@@ -106,6 +106,7 @@ CONFIG_SCHEMA = cv.All(
             cv.GenerateID(): cv.declare_id(PytesEBoxComponent),
             cv.Required(CONF_BATTERIES_COMPONENT): CV_NUM_BATTERIES,
             cv.Required(CONF_POLL_TIMEOUT): cv.positive_time_period_milliseconds,
+            cv.Optional(CONF_CMD_IDLE_TIME): cv.positive_time_period_milliseconds,
         }
     )
     .extend(cv.polling_component_schema("15s"))
@@ -116,6 +117,6 @@ async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     cg.add(var.set_system_battery_count(config[CONF_BATTERIES_COMPONENT]))
     cg.add(var.set_polling_timeout(config[CONF_POLL_TIMEOUT]))
-    #cg.add(var.set_cmd_idle_time(config[CONF_CMD_IDLE_TIME]))
+    cg.add(var.set_cmd_idle_time(config[CONF_CMD_IDLE_TIME]))
     await cg.register_component(var, config)
     await uart.register_uart_device(var, config)

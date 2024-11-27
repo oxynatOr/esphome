@@ -47,6 +47,9 @@ void WaveshareEPaper7P5InV2P::turn_on_display_() {
 }
 
 void WaveshareEPaper7P5InV2P::initialize() {
+  this->initialize_fast();
+
+  /*
   this->reset_();
 
   // COMMAND POWER SETTING
@@ -91,6 +94,7 @@ void WaveshareEPaper7P5InV2P::initialize() {
   // COMMAND TCON SETTING
   this->command(0x60);
   this->data(0x22);
+  */
 
 /*
   // COMMAND ENABLE FAST UPDATE

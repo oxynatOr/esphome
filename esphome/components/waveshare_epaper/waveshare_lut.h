@@ -3,7 +3,7 @@
 namespace esphome {
 namespace waveshare_epaper {
 
-static const char *const TAG = "waveshare_lookup_table";
+//static const char *const TAG = "waveshare_lookup_table";
 
 static const uint8_t PARTIAL_LUT_213v3[] = {
     0x32,  // cmd

@@ -6,7 +6,7 @@
 namespace esphome {
 namespace waveshare_epaper {
 
-static const char *const TAG = "waveshare_7.5v2_partialrefresh";
+//static const char *const TAG = "waveshare_7.5v2_partialrefresh";
 
 
 /* 7.50inV2 with partial and fast refresh */

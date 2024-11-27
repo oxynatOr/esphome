@@ -2,12 +2,13 @@
 #include "waveshare_lut.h"
 #include "esphome/core/log.h"
 #include "esphome/core/application.h"
+#include "esphome/core/helpers.h"
+#include <cinttypes>
 
 namespace esphome {
 namespace waveshare_epaper {
 
 static const char *const TAG = "waveshare_7.5v2_partialrefresh";
-
 
 /* 7.50inV2 with partial and fast refresh */
 bool WaveshareEPaper7P5InV2P::wait_until_idle_() {

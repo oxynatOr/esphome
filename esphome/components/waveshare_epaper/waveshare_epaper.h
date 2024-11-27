@@ -692,6 +692,9 @@ class WaveshareEPaper7P5InV2P : public WaveshareEPaper {
  public:
   bool wait_until_idle_();
 
+  void initialize_fast();
+  void initialize_part();
+
   void initialize() override;
 
   void display() override;

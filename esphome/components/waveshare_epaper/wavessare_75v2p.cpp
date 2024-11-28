@@ -225,13 +225,18 @@ void HOT WaveshareEPaper7P5InV2P::display_part() {
     }
 
     ESP_LOGV(TAG, "partial refresh - done");
-    //delay(100);  // NOLINT
-    //this->wait_until_idle_();
+    delay(100);  // NOLINT
+    this->wait_until_idle_();
 
     this->turn_on_display_();  
 }
 
 void HOT WaveshareEPaper7P5InV2P::display() {
+  ESP_LOGI(TAG, "Power on the display and hat");
+  this->command(0x04);
+  delay(200);  // NOLINT
+  this->wait_until_idle_();
+    
   this->display_part();
   /*
   uint32_t buf_len = this->get_buffer_length_();

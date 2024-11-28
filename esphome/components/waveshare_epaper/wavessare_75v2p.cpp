@@ -196,8 +196,11 @@ void HOT WaveshareEPaper7P5InV2P::display_fast() {
 
 void HOT WaveshareEPaper7P5InV2P::display_part() {
   uint32_t buf_len = this->get_buffer_length_();
-    // Enable partial refresh
     ESP_LOGV(TAG, "partial refresh");
+    // Enable partial refresh
+//    this->command(0xE5);
+//    this->data(0x6E);    
+  
     this->command(0x50);
     this->data(0xA9);
     this->data(0x07);
@@ -206,13 +209,13 @@ void HOT WaveshareEPaper7P5InV2P::display_part() {
     this->command(0x91);
     this->command(0x90);
 
-    //this->data(0x00);
-    //this->data(0x00);
+    this->data(0x00);
+    this->data(0x00);
     this->data((get_width_internal() - 1) >> 8 & 0xFF);
     this->data((get_width_internal() - 1) & 0xFF);
 
-    //this->data(0x00);
-    //this->data(0x00);
+    this->data(0x00);
+    this->data(0x00);
     this->data((get_height_internal() - 1) >> 8 & 0xFF);
     this->data((get_height_internal() - 1) & 0xFF);
 
@@ -239,8 +242,10 @@ void HOT WaveshareEPaper7P5InV2P::display() {
   this->wait_until_idle_();
 
   this->display_part();
+  return;
   */
   uint32_t buf_len = this->get_buffer_length_();
+
   // COMMAND POWER ON
   ESP_LOGI(TAG, "Power on the display and hat");
 
@@ -249,7 +254,6 @@ void HOT WaveshareEPaper7P5InV2P::display() {
   this->wait_until_idle_();
 
   if (this->full_update_every_ == 1) {
-    ESP_LOGV(TAG, "full_update_every == 1");
     this->command(0x13);
     for (uint32_t i = 0; i < buf_len; i++) {
       this->data(~(this->buffer_[i]));
@@ -262,13 +266,11 @@ void HOT WaveshareEPaper7P5InV2P::display() {
     return;
   }
 
-  ESP_LOGV(TAG, "Send Commands #1");
   this->command(0x50);
   this->data(0xA9);
   this->data(0x07);
 
   if (this->at_update_ == 0) {
-    ESP_LOGV(TAG, "Enable fast refresh");
     // Enable fast refresh
     this->command(0xE5);
     this->data(0x5A);
@@ -277,60 +279,53 @@ void HOT WaveshareEPaper7P5InV2P::display() {
 
     this->command(0x10);
     delay(2);  // NOLINT
-    ESP_LOGV(TAG, "Read current Display Buffer");
     for (uint32_t i = 0; i < buf_len; i++) {
       this->data(~(this->buffer_[i]));
     }
-    ESP_LOGV(TAG, "Wait untill idle");
+
     delay(100);  // NOLINT
     this->wait_until_idle_();
-    ESP_LOGV(TAG, "Wait untill idle - done");
 
-    ESP_LOGV(TAG, "Write current Display Buffer");
     this->command(0x13);
     delay(2);  // NOLINT
     for (uint32_t i = 0; i < buf_len; i++) {
       this->data(this->buffer_[i]);
     }
 
-    ESP_LOGV(TAG, "Wait untill idle");
     delay(100);  // NOLINT
     this->wait_until_idle_();
-    ESP_LOGV(TAG, "Wait untill idle - done");
+
     this->turn_on_display_();
 
   } else {
     // Enable partial refresh
-    ESP_LOGV(TAG, "partial refresh");
-    this->command(0x50);
-    this->data(0xA9);
-    this->data(0x07);
+    this->command(0xE5);
+    this->data(0x6E);
 
     // Activate partial refresh and set window bounds
     this->command(0x91);
     this->command(0x90);
 
-    //this->data(0x00);
-    //this->data(0x00);
+    this->data(0x00);
+    this->data(0x00);
     this->data((get_width_internal() - 1) >> 8 & 0xFF);
     this->data((get_width_internal() - 1) & 0xFF);
 
-    //this->data(0x00);
-    //this->data(0x00);
+    this->data(0x00);
+    this->data(0x00);
     this->data((get_height_internal() - 1) >> 8 & 0xFF);
     this->data((get_height_internal() - 1) & 0xFF);
 
     this->data(0x01);
-    ESP_LOGV(TAG, "partial refresh write");
+
     this->command(0x13);
     delay(2);  // NOLINT
     for (uint32_t i = 0; i < buf_len; i++) {
       this->data(this->buffer_[i]);
     }
 
-    ESP_LOGV(TAG, "partial refresh - done");
-    //delay(100);  // NOLINT
-    //this->wait_until_idle_();
+    delay(100);  // NOLINT
+    this->wait_until_idle_();
 
     this->turn_on_display_();
   }

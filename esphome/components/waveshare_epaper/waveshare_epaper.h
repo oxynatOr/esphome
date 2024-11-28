@@ -698,6 +698,8 @@ class WaveshareEPaper7P5InV2P : public WaveshareEPaper {
   void initialize() override;
 
   void display() override;
+  void display_part();
+  void display_fast();
 
   void dump_config() override;
 

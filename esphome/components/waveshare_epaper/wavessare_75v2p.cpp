@@ -160,9 +160,81 @@ void WaveshareEPaper7P5InV2P::initialize_part() {
   
 }
 
-void HOT WaveshareEPaper7P5InV2P::display() {
+void HOT WaveshareEPaper7P5InV2P::display_fast() {
   uint32_t buf_len = this->get_buffer_length_();
+    ESP_LOGV(TAG, "Enable fast refresh");
+    // Enable fast refresh
+    this->command(0xE5);
+    this->data(0x5A);
 
+    this->command(0x92);
+
+    this->command(0x10);
+    delay(2);  // NOLINT
+    ESP_LOGV(TAG, "Read current Display Buffer");
+    for (uint32_t i = 0; i < buf_len; i++) {
+      this->data(~(this->buffer_[i]));
+    }
+    ESP_LOGV(TAG, "Wait untill idle");
+    delay(100);  // NOLINT
+    this->wait_until_idle_();
+    ESP_LOGV(TAG, "Wait untill idle - done");
+
+    ESP_LOGV(TAG, "Write current Display Buffer");
+    this->command(0x13);
+    delay(2);  // NOLINT
+    for (uint32_t i = 0; i < buf_len; i++) {
+      this->data(this->buffer_[i]);
+    }
+
+    ESP_LOGV(TAG, "Wait untill idle");
+    delay(100);  // NOLINT
+    this->wait_until_idle_();
+    ESP_LOGV(TAG, "Wait untill idle - done");
+    this->turn_on_display_();  
+}
+
+void HOT WaveshareEPaper7P5InV2P::display_part() {
+  uint32_t buf_len = this->get_buffer_length_();
+    // Enable partial refresh
+    ESP_LOGV(TAG, "partial refresh");
+    this->command(0x50);
+    this->data(0xA9);
+    this->data(0x07);
+
+    // Activate partial refresh and set window bounds
+    this->command(0x91);
+    this->command(0x90);
+
+    //this->data(0x00);
+    //this->data(0x00);
+    this->data((get_width_internal() - 1) >> 8 & 0xFF);
+    this->data((get_width_internal() - 1) & 0xFF);
+
+    //this->data(0x00);
+    //this->data(0x00);
+    this->data((get_height_internal() - 1) >> 8 & 0xFF);
+    this->data((get_height_internal() - 1) & 0xFF);
+
+    this->data(0x01);
+    ESP_LOGV(TAG, "partial refresh write");
+    this->command(0x13);
+    delay(2);  // NOLINT
+    for (uint32_t i = 0; i < buf_len; i++) {
+      this->data(this->buffer_[i]);
+    }
+
+    ESP_LOGV(TAG, "partial refresh - done");
+    //delay(100);  // NOLINT
+    //this->wait_until_idle_();
+
+    this->turn_on_display_();  
+}
+
+void HOT WaveshareEPaper7P5InV2P::display() {
+  this->display_part();
+  /*
+  uint32_t buf_len = this->get_buffer_length_();
   // COMMAND POWER ON
   ESP_LOGI(TAG, "Power on the display and hat");
 
@@ -224,20 +296,21 @@ void HOT WaveshareEPaper7P5InV2P::display() {
   } else {
     // Enable partial refresh
     ESP_LOGV(TAG, "partial refresh");
-    this->command(0xE5);
-    this->data(0x6E);
+    this->command(0x50);
+    this->data(0xA9);
+    this->data(0x07);
 
     // Activate partial refresh and set window bounds
     this->command(0x91);
     this->command(0x90);
 
-    this->data(0x00);
-    this->data(0x00);
+    //this->data(0x00);
+    //this->data(0x00);
     this->data((get_width_internal() - 1) >> 8 & 0xFF);
     this->data((get_width_internal() - 1) & 0xFF);
 
-    this->data(0x00);
-    this->data(0x00);
+    //this->data(0x00);
+    //this->data(0x00);
     this->data((get_height_internal() - 1) >> 8 & 0xFF);
     this->data((get_height_internal() - 1) & 0xFF);
 
@@ -248,9 +321,10 @@ void HOT WaveshareEPaper7P5InV2P::display() {
     for (uint32_t i = 0; i < buf_len; i++) {
       this->data(this->buffer_[i]);
     }
+
     ESP_LOGV(TAG, "partial refresh - done");
-    delay(100);  // NOLINT
-    this->wait_until_idle_();
+    //delay(100);  // NOLINT
+    //this->wait_until_idle_();
 
     this->turn_on_display_();
   }
@@ -259,7 +333,7 @@ void HOT WaveshareEPaper7P5InV2P::display() {
   this->command(0x02);
   this->wait_until_idle_();
   ESP_LOGV(TAG, "After command(0x02) (>> power off)");
-
+*/
   this->at_update_ = (this->at_update_ + 1) % this->full_update_every_;
 }
 

@@ -232,13 +232,14 @@ void HOT WaveshareEPaper7P5InV2P::display_part() {
 }
 
 void HOT WaveshareEPaper7P5InV2P::display() {
+  /*
   ESP_LOGI(TAG, "Power on the display and hat");
   this->command(0x04);
   delay(200);  // NOLINT
   this->wait_until_idle_();
-    
+
   this->display_part();
-  /*
+  */
   uint32_t buf_len = this->get_buffer_length_();
   // COMMAND POWER ON
   ESP_LOGI(TAG, "Power on the display and hat");
@@ -338,7 +339,7 @@ void HOT WaveshareEPaper7P5InV2P::display() {
   this->command(0x02);
   this->wait_until_idle_();
   ESP_LOGV(TAG, "After command(0x02) (>> power off)");
-*/
+
   this->at_update_ = (this->at_update_ + 1) % this->full_update_every_;
 }
 

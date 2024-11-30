@@ -268,7 +268,7 @@ void HOT WaveshareEPaper7P5InV2P::display_part() {
 
     this->turn_on_display_();  
 }
-
+/*
 void HOT WaveshareEPaper7P5InV2P::display() {
   uint32_t buf_len = this->get_buffer_length_();
   if (this->full_update_every_ == 1) {
@@ -288,9 +288,9 @@ void HOT WaveshareEPaper7P5InV2P::display() {
   this->wait_until_idle_();
   this->at_update_ = (this->at_update_ + 1) % this->full_update_every_;
 }
+*/
 
 
-/*
 void HOT WaveshareEPaper7P5InV2P::display() {
   uint32_t buf_len = this->get_buffer_length_();
 
@@ -380,12 +380,13 @@ void HOT WaveshareEPaper7P5InV2P::display() {
 
   ESP_LOGV(TAG, "Before command(0x02) (>> power off)");
   this->command(0x02);
+  //this->command(0x12);
   this->wait_until_idle_();
   ESP_LOGV(TAG, "After command(0x02) (>> power off)");
 
   this->at_update_ = (this->at_update_ + 1) % this->full_update_every_;
 }
-*/
+
 int WaveshareEPaper7P5InV2P::get_width_internal() { return 800; }
 int WaveshareEPaper7P5InV2P::get_height_internal() { return 480; }
 uint32_t WaveshareEPaper7P5InV2P::idle_timeout_() { return 10000; }

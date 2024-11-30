@@ -14,7 +14,7 @@ static const uint8_t POWER_OFF        = 0x02;
 static const uint8_t DISPLAY_REFRESH  = 0x12; 
 static const uint8_t PANEL_SETTING    = 0x00;
 static const uint8_t VCOM_CDI         = 0x50;
-static const uint8_t 
+//static const uint8_t 
 
 
 /* 7.50inV2 with partial and fast refresh */

@@ -10,6 +10,13 @@ namespace waveshare_epaper {
 
 static const char *const TAG = "waveshare_7.5v2_partialrefresh";
 
+static const uint8_t POWER_OFF        = 0x02;
+static const uint8_t DISPLAY_REFRESH  = 0x12; 
+static const uint8_t PANEL_SETTING    = 0x00;
+static const uint8_t VCOM_CDI         = 0x50;
+static const uint8_t 
+
+
 /* 7.50inV2 with partial and fast refresh */
 bool WaveshareEPaper7P5InV2P::wait_until_idle_() {
   if (this->busy_pin_ == nullptr) {
@@ -199,6 +206,10 @@ void WaveshareEPaper7P5InV2P::initialize_4gray() {
 void HOT WaveshareEPaper7P5InV2P::display_fast() {
   uint32_t buf_len = this->get_buffer_length_();
     ESP_LOGV(TAG, "Enable fast refresh");
+
+    this->command(0x50);
+    this->data(0xA9);
+    this->data(0x07);    
     // Enable fast refresh
     this->command(0xE5);
     this->data(0x5A);
@@ -268,7 +279,7 @@ void HOT WaveshareEPaper7P5InV2P::display_part() {
 
     this->turn_on_display_();  
 }
-/*
+/**/
 void HOT WaveshareEPaper7P5InV2P::display() {
   uint32_t buf_len = this->get_buffer_length_();
   if (this->full_update_every_ == 1) {
@@ -283,12 +294,15 @@ void HOT WaveshareEPaper7P5InV2P::display() {
     this->display_part();
   }
   //this->turn_on_display_();  
-  this->command(0x12);
+  /*/
+  this->command(0x02);
   delay(100);
   this->wait_until_idle_();
+  */
+  this->deep_sleep();
   this->at_update_ = (this->at_update_ + 1) % this->full_update_every_;
 }
-*/
+/**
 
 
 void HOT WaveshareEPaper7P5InV2P::display() {
@@ -386,7 +400,7 @@ void HOT WaveshareEPaper7P5InV2P::display() {
 
   this->at_update_ = (this->at_update_ + 1) % this->full_update_every_;
 }
-
+**/
 int WaveshareEPaper7P5InV2P::get_width_internal() { return 800; }
 int WaveshareEPaper7P5InV2P::get_height_internal() { return 480; }
 uint32_t WaveshareEPaper7P5InV2P::idle_timeout_() { return 10000; }

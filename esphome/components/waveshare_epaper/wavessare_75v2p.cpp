@@ -49,7 +49,10 @@ void WaveshareEPaper7P5InV2P::turn_on_display_() {
 void WaveshareEPaper7P5InV2P::initialize() {
   this->initialize_fast();
 
-  /*
+
+}
+
+void WaveshareEPaper7P5InV2P::initialize_common() {  
   this->reset_();
 
   // COMMAND POWER SETTING
@@ -94,7 +97,7 @@ void WaveshareEPaper7P5InV2P::initialize() {
   // COMMAND TCON SETTING
   this->command(0x60);
   this->data(0x22);
-  */
+  
 
 /*
   // COMMAND ENABLE FAST UPDATE
@@ -105,6 +108,7 @@ void WaveshareEPaper7P5InV2P::initialize() {
 */
   // COMMAND POWER DRIVER HAT DOWN
   this->command(0x02);
+  
 }
 
 void WaveshareEPaper7P5InV2P::initialize_fast() {
@@ -160,6 +164,38 @@ void WaveshareEPaper7P5InV2P::initialize_part() {
   
 }
 
+void WaveshareEPaper7P5InV2P::initialize_4gray() {
+  this->reset_();
+
+  // COMMAND PANEL SETTING
+  this->command(0x00);
+  this->data(0x1F);
+
+  // COMMAND VCOM AND DATA INTERVAL SETTING
+  this->command(0x50);
+  this->data(0x10);
+  this->data(0x07);    
+
+
+  // COMMAND POWER DRIVER HAT UP
+  this->command(0x04);
+  delay(100);  // NOLINT
+  this->wait_until_idle_();
+
+  // COMMAND BOOSTER SOFT START
+  this->command(0x06);
+  this->data(0x27);
+  this->data(0x27);
+  this->data(0x18);
+  this->data(0x17);
+
+  // COMMAND ENABLE FAST UPDATE
+  this->command(0xE0);
+  this->data(0x02);
+  this->command(0xE5);
+  this->data(0x5A);  
+}
+
 void HOT WaveshareEPaper7P5InV2P::display_fast() {
   uint32_t buf_len = this->get_buffer_length_();
     ESP_LOGV(TAG, "Enable fast refresh");
@@ -199,8 +235,7 @@ void HOT WaveshareEPaper7P5InV2P::display_part() {
     ESP_LOGV(TAG, "partial refresh");
     // Enable partial refresh
 //    this->command(0xE5);
-//    this->data(0x6E);    
-  
+//    this->data(0x6E);      
     this->command(0x50);
     this->data(0xA9);
     this->data(0x07);
@@ -235,19 +270,32 @@ void HOT WaveshareEPaper7P5InV2P::display_part() {
 }
 
 void HOT WaveshareEPaper7P5InV2P::display() {
-  /*
-  ESP_LOGI(TAG, "Power on the display and hat");
-  this->command(0x04);
-  delay(200);  // NOLINT
+  uint32_t buf_len = this->get_buffer_length_();
+  if (this->full_update_every_ == 1) {
+    this->command(0x13);
+    for (uint32_t i = 0; i < buf_len; i++) {
+      this->data(~(this->buffer_[i]));
+    }
+    //return;
+  }  else if (this->at_update_ == 0) { 
+    this->display_fast();
+  } else {
+    this->display_part();
+  }
+  //this->turn_on_display_();  
+  this->command(0x12);
+  delay(100);
   this->wait_until_idle_();
+  this->at_update_ = (this->at_update_ + 1) % this->full_update_every_;
+}
 
-  this->display_part();
-  return;
-  */
+
+/*
+void HOT WaveshareEPaper7P5InV2P::display() {
   uint32_t buf_len = this->get_buffer_length_();
 
   // COMMAND POWER ON
-  ESP_LOGI(TAG, "Power on the display and hat");
+  ESP_LOGV(TAG, "Power on the display and hat");
 
   this->command(0x04);
   delay(200);  // NOLINT
@@ -337,13 +385,13 @@ void HOT WaveshareEPaper7P5InV2P::display() {
 
   this->at_update_ = (this->at_update_ + 1) % this->full_update_every_;
 }
-
+*/
 int WaveshareEPaper7P5InV2P::get_width_internal() { return 800; }
 int WaveshareEPaper7P5InV2P::get_height_internal() { return 480; }
 uint32_t WaveshareEPaper7P5InV2P::idle_timeout_() { return 10000; }
 void WaveshareEPaper7P5InV2P::dump_config() {
   LOG_DISPLAY("", "Waveshare E-Paper", this);
-  ESP_LOGCONFIG(TAG, "  Model: 7.5inV2rev2");
+  ESP_LOGCONFIG(TAG, "  Model: 7.5inV2rev2 (sold after September 2023)");
   ESP_LOGCONFIG(TAG, "  Full Update Every: %" PRIu32, this->full_update_every_);
   LOG_PIN("  Reset Pin: ", this->reset_pin_);
   LOG_PIN("  DC Pin: ", this->dc_pin_);

@@ -694,7 +694,8 @@ class WaveshareEPaper7P5InV2P : public WaveshareEPaper {
 
   void initialize_fast();
   void initialize_part();
-
+  void initialize_4gray();
+  void initialize_common();
   void initialize() override;
 
   void display() override;
@@ -704,6 +705,8 @@ class WaveshareEPaper7P5InV2P : public WaveshareEPaper {
   void dump_config() override;
 
   void deep_sleep() override {
+    this->command(0x50);
+    this->data(0xF7);
     // COMMAND POWER OFF
     this->command(0x02);
     this->wait_until_idle_();

@@ -148,6 +148,9 @@ void WaveshareEPaper7P5InV2P::initialize_fast() {
   this->command(0xE5);
   this->data(0x5A);
 
+  // COMMAND POWER DRIVER HAT DOWN
+  this->command(0x02);
+  
 }
 
 void WaveshareEPaper7P5InV2P::initialize_part() {

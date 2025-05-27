@@ -35,9 +35,9 @@ void ADCSensor::setup() {
         adc_oneshot_unit_init_cfg_t init_config1 = {};
         init_config1.unit_id = ADC_UNIT_1;
         init_config1.ulp_mode = ADC_ULP_MODE_DISABLE;
-#if USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32H2
+#if USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C5 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32H2
         init_config1.clk_src = ADC_DIGI_CLK_SRC_DEFAULT;
-#endif  // USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32H2
+#endif  // USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C5 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32H2
         esp_err_t err = adc_oneshot_new_unit(&init_config1, &this->adc1_handle_);
         if (err != ESP_OK) {
           ESP_LOGE(TAG, "Error initializing ADC1 unit: %d", err);
@@ -73,9 +73,9 @@ void ADCSensor::setup() {
         adc_oneshot_unit_init_cfg_t init_config2 = {};
         init_config2.unit_id = ADC_UNIT_2;
         init_config2.ulp_mode = ADC_ULP_MODE_DISABLE;
-#if USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32H2
+#if USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C5 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32H2
         init_config2.clk_src = ADC_DIGI_CLK_SRC_DEFAULT;
-#endif  // USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32H2
+#endif  // USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C5 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32H2
         esp_err_t err = adc_oneshot_new_unit(&init_config2, &this->adc2_handle_);
         if (err != ESP_OK) {
           ESP_LOGE(TAG, "Error initializing ADC2 unit: %d", err);
@@ -108,7 +108,7 @@ void ADCSensor::setup() {
     adc_unit_t unit_id = this->is_adc1_ ? ADC_UNIT_1 : ADC_UNIT_2;
     esp_err_t err;
 
-#if USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32S3 || USE_ESP32_VARIANT_ESP32H2
+#if USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C5 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32S3 || USE_ESP32_VARIANT_ESP32H2
     // RISC-V variants and S3 use curve fitting calibration
     adc_cali_curve_fitting_config_t cali_config = {};  // Zero initialize first
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 3, 0)
@@ -145,7 +145,7 @@ void ADCSensor::setup() {
       ESP_LOGW(TAG, "Line fitting calibration failed with error %d, will use uncalibrated readings", err);
       this->calibration_complete_ = false;
     }
-#endif  // USE_ESP32_VARIANT_ESP32C3 || ESP32C6 || ESP32S3 || ESP32H2
+#endif  // USE_ESP32_VARIANT_ESP32C3 || ESP32C5 || ESP32C6 || ESP32S3 || ESP32H2
   }
 
   this->init_complete_ = true;
@@ -233,11 +233,11 @@ float ADCSensor::sample() {
       } else {
         ESP_LOGW(TAG, "ADC calibration conversion failed with error %d, disabling calibration", err);
         if (this->calibration_handle_ != nullptr) {
-#if USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32S3 || USE_ESP32_VARIANT_ESP32H2
+#if USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C5 || USE_ESP32_VARIANT_ESP32C6 || USE_ESP32_VARIANT_ESP32S3 || USE_ESP32_VARIANT_ESP32H2
           adc_cali_delete_scheme_curve_fitting(this->calibration_handle_);
 #else   // Other ESP32 variants use line fitting calibration
           adc_cali_delete_scheme_line_fitting(this->calibration_handle_);
-#endif  // USE_ESP32_VARIANT_ESP32C3 || ESP32C6 || ESP32S3 || ESP32H2
+#endif  // USE_ESP32_VARIANT_ESP32C3 || USE_ESP32_VARIANT_ESP32C5 || ESP32C6 || ESP32S3 || ESP32H2
           this->calibration_handle_ = nullptr;
         }
       }

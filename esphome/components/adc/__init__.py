@@ -5,6 +5,7 @@ from esphome.components.esp32.const import (
     VARIANT_ESP32,
     VARIANT_ESP32C2,
     VARIANT_ESP32C3,
+    VARIANT_ESP32C5,
     VARIANT_ESP32C6,
     VARIANT_ESP32H2,
     VARIANT_ESP32S2,
@@ -77,6 +78,15 @@ ESP32_VARIANT_ADC1_PIN_TO_CHANNEL = {
         3: adc1_channel_t.ADC1_CHANNEL_3,
         4: adc1_channel_t.ADC1_CHANNEL_4,
     },
+    # https://github.com/espressif/esp-idf/blob/master/components/soc/esp32c5/include/soc/adc_channel.h
+    VARIANT_ESP32C5: {        
+        1: adc1_channel_t.ADC1_CHANNEL_0,
+        2: adc1_channel_t.ADC1_CHANNEL_1,
+        3: adc1_channel_t.ADC1_CHANNEL_2,
+        4: adc1_channel_t.ADC1_CHANNEL_3,
+        5: adc1_channel_t.ADC1_CHANNEL_4,
+        6: adc1_channel_t.ADC1_CHANNEL_5,
+    },
     # https://github.com/espressif/esp-idf/blob/master/components/soc/esp32c6/include/soc/adc_channel.h
     VARIANT_ESP32C6: {
         0: adc1_channel_t.ADC1_CHANNEL_0,
@@ -147,6 +157,8 @@ ESP32_VARIANT_ADC2_PIN_TO_CHANNEL = {
     VARIANT_ESP32C3: {
         5: adc2_channel_t.ADC2_CHANNEL_0,
     },
+    # https://github.com/espressif/esp-idf/blob/master/components/soc/esp32c5/include/soc/adc_channel.h
+    VARIANT_ESP32C5: {},  # no ADC2    
     # https://github.com/espressif/esp-idf/blob/master/components/soc/esp32c6/include/soc/adc_channel.h
     VARIANT_ESP32C6: {},  # no ADC2
     # https://github.com/espressif/esp-idf/blob/master/components/soc/esp32h2/include/soc/adc_channel.h
